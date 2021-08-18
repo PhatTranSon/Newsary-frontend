@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { breakpoints } from "../../styling/theme";
 import { Icon } from "../typography";
 
 
@@ -8,7 +9,7 @@ const Wrapper = styled.footer`
     padding: 2rem; 
     border-top: 2px solid #eee;
 
-    @media only screen and (max-width: 500px) {
+    ${breakpoints.sm} {
         flex-flow: column nowrap;
     }
 `;
@@ -19,7 +20,7 @@ const IconSection = styled.div`
     justify-content: center;
     align-items: center;
 
-    @media only screen and (max-width: 500px) {
+    ${breakpoints.sm} {
         margin-bottom: 2rem;
     }
 `;
@@ -46,7 +47,7 @@ const LinkSection = styled.div`
         color: ${props => props.theme.black}
     }
 
-    @media only screen and (max-width: 500px) {
+    ${breakpoints.sm} {
         flex: 0 0 100%;
         text-align: center;
         margin-bottom: 2rem;

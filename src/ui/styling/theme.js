@@ -9,3 +9,13 @@ export const theme = {
     gray: "#eee",
     white: "#fff"
 };
+
+const sizes = {
+    sm: "500px",
+    lg: "1200px"
+}
+
+export const breakpoints = {
+    sm: `@media only screen and (max-width:${sizes.sm})`,
+    lg: `@media only screen and (max-width:${sizes.lg})`
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { trimParagraph } from "../../../helper/string";
 
@@ -10,6 +11,11 @@ const Article = styled.article`
 
     & div {
         margin-left: 1rem;
+    }
+
+    & a {
+        text-decoration: none;
+        color: ${props => props.theme.black};
     }
 
     border-bottom: 3px dashed #eee;
@@ -45,7 +51,6 @@ export const NewsSection = styled.section`
     margin: 0 auto;
 `
 
-
 export const NewsCard = ({ article }) => {
     //Get attribute
     const { id, title, image, text, date } = article;
@@ -57,7 +62,10 @@ export const NewsCard = ({ article }) => {
                 <Image src={image} alt="News image"/>
             </ImageSection>
             <div>
-                <Title>{ title }</Title>
+                <Link to={`/news/${id}`}>
+                    <Title>{ title }</Title>
+                </Link>
+
                 <Paragraph>{ trimParagraph(text) }</Paragraph>
                 <Date>{ date }</Date>
             </div>

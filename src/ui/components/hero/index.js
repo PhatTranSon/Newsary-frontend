@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import { Button } from "../button";
 import { PlaceHolderHero } from "./placeholder";
+import { Link } from "react-router-dom";
 
 
 //News components
@@ -50,7 +51,7 @@ const TextSection = styled.div`
 `;
 
 export const Hero = ({ article, loading }) => {
-    const { title, image, authors } = article;
+    const { id, title, image, authors } = article;
 
     return (
         loading ?
@@ -64,7 +65,9 @@ export const Hero = ({ article, loading }) => {
                 <TextSection>
                     <h1>{title}</h1>
                     <h2>By {authors}</h2>
-                    <Button>See more</Button>
+                    <Link to={`/news/${id}`}>
+                        <Button>See more</Button>
+                    </Link>
                 </TextSection>
             </Wrapper>
         </>
