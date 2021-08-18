@@ -13,6 +13,10 @@ const Article = styled.article`
     }
 
     border-bottom: 3px dashed #eee;
+
+    &:last-child {
+        border-bottom: none;
+    }
 `;
 
 const ImageSection = styled.div`
@@ -21,6 +25,7 @@ const ImageSection = styled.div`
 
 const Image = styled.img`
     width: 100%;
+    border-radius: 5px;
 `;
 
 const Title = styled.h3`
@@ -43,7 +48,7 @@ export const NewsSection = styled.section`
 
 export const NewsCard = ({ article }) => {
     //Get attribute
-    const { id, title, image, authors, url, text, date } = article;
+    const { id, title, image, text, date } = article;
 
     //Render
     return (

@@ -1,26 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { Button, ButtonGroup } from "../button";
+import { Icon } from "../typography";
 
 const Nav = styled.nav`
     display: flex;
     justify-content: space-between;
     padding: 0.75rem;
     border-bottom: 2px solid #eee;
-`;
-
-const Icon = styled.h1`
-    font-weight: 400;
-    font-size: 1.5rem;
-    color: #e76f51;
-
-    &::after {
-        content: "";
-        display: block;
-        width: 50%;
-        height: 3px;
-        background-color: ${props => props.theme.primaryColorLight}
-    }
 `;
 
 export const Header = () => {
