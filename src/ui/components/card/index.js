@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { trimParagraph } from "../../../helper/string";
 
 
 const Article = styled.article`
@@ -27,7 +28,7 @@ const Title = styled.h3`
 `;
 
 const Paragraph = styled.p`
-
+    margin-bottom: 1rem;
 `;
 
 const Date = styled.p`
@@ -52,7 +53,7 @@ export const NewsCard = ({ article }) => {
             </ImageSection>
             <div>
                 <Title>{ title }</Title>
-                <Paragraph></Paragraph>
+                <Paragraph>{ trimParagraph(text) }</Paragraph>
                 <Date>{ date }</Date>
             </div>
         </Article>
