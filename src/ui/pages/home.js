@@ -2,6 +2,7 @@ import React from "react";
 import { Hero } from "../components/hero";
 import { useNews } from "../../hooks/news";
 import { NewsCard, NewsSection } from "../components/card";
+import { Loading } from "../components/loading";
 
 export const Home = () => {
     //Use news hook
@@ -12,7 +13,7 @@ export const Home = () => {
     } = useNews();
 
     //Get the articles
-    const loading = articles.length == 0;
+    const loading = articles.length === 0;
     const firstArticle = loading ? [] : articles[0];
     const remainingArticles = loading ? [] : articles.slice(1);
 
@@ -21,7 +22,7 @@ export const Home = () => {
             <Hero loading={loading} article={firstArticle}/>
             {
                 loading ? 
-                <p>Loading</p> :
+                <Loading/> :
                 <>
                     <NewsSection>
                     {
