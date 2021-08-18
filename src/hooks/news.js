@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getNews } from "../api/news";
+import { getNews, getSingleArticle } from "../api/news";
 
 export function useNews(afterId) {
     const [articles, setArticles] = useState([]);
@@ -28,5 +28,21 @@ export function useNews(afterId) {
         articles,
         error,
         requestArticles
+    };
+}
+
+export function useSingleNews(id) {
+    const [article, setArticle] = useState(null);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        getSingleArticle(id)
+            .then(article => setArticle(article))
+            .catch(error => setError(error));
+    }, []);
+
+    return { 
+        article,
+        error
     };
 }
