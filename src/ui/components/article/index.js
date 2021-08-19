@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { TextHighlightable } from "../text-highlight";
 import { connect } from "react-redux";
+import { isValidWord, processWord } from "../../../helper/string";
+import { changeHighlightMenuCoords, changeHighlightMenuVisibility, textHighlight, textHighlightError } from "../../../state/mutations";
 
 
 export const ArticleWrapper = styled.article`
@@ -89,7 +91,7 @@ const ArticleMain = ({ text, date, onHighlight }) => {
     )
 }
 
-const ArticleDisplay = ({ article }) => {
+const ArticleDisplay = ({ article, onTextHighlight }) => {
     //Destruct
     const { image, title, authors, text, date } = article;
 
@@ -102,7 +104,8 @@ const ArticleDisplay = ({ article }) => {
 
             <ArticleMain 
                 text={text}
-                date={date}/>
+                date={date}
+                onHighlight={onTextHighlight}/>
         </ArticleWrapper>
     )
 };
@@ -110,7 +113,7 @@ const ArticleDisplay = ({ article }) => {
 function mapStateToProps(state, ownProps) {
     //Get article id from own props
     const articleId = +(ownProps.articleId);
-    const article = state.homePage.allArticles.find(item => item.id == articleId);
+    const article = state.homePage.allArticles.find(item => item.id === articleId);
 
     //Return right article
     return {
@@ -118,4 +121,26 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-export const ConnectedArticleDisplay = connect(mapStateToProps)(ArticleDisplay);
+function mapDispatchToProps(dispatch, ownProps) {
+    function displayHighlighMenu(word, coords) {
+        dispatch(textHighlight(word));
+        dispatch(changeHighlightMenuVisibility(true));
+        dispatch(changeHighlightMenuCoords(coords));
+    };
+
+    function displayError() {
+        dispatch(textHighlightError());
+    }
+
+    return {
+        onTextHighlight: function({ text, coords }) {
+            if (isValidWord(text)) {
+                displayHighlighMenu(processWord(text), coords);
+            } else {
+                displayError();
+            }
+        }
+    };
+}
+
+export const ConnectedArticleDisplay = connect(mapStateToProps, mapDispatchToProps)(ArticleDisplay);

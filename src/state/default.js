@@ -7,8 +7,12 @@ export const defaultState = {
     },
     articlePage: {
         articleId: 0,
+        highlight: {
+            text: null,
+            error: null
+        },
         menu: {
-            isVisible: false,
+            visible: false,
             x: 0,
             y: 0
         },

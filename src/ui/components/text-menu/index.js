@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import { useOutsideClick } from "../../../hooks/ui";
 
@@ -30,16 +31,22 @@ const MenuListItem = styled.li`
 `;
 
 
-export const TextMenu = ({ visible, x, y, onOutsideCick, onLookUpClick }) => {
-    //Reference
-    const ref = useRef(null);
-    useOutsideClick(ref, onOutsideCick);
-
+const TextMenu = ({ visible, x, y }) => {
     return (
-        <MenuWrapper ref={ref} visible={visible} x={x} y={y}>
+        <MenuWrapper visible={visible} x={x} y={y}>
             <MenuList>
-                <MenuListItem onClick={onLookUpClick}>Look it up</MenuListItem>
+                <MenuListItem>Look it up</MenuListItem>
             </MenuList>
         </MenuWrapper>
-    )
+    );
 }
+
+function mapStateToProps(state, ownProps) {
+    return {
+        visible: state.articlePage.menu.visible,
+        x: state.articlePage.menu.x,
+        y: state.articlePage.menu.y
+    };
+}
+
+export const ConnectedTextMenu = connect(mapStateToProps)(TextMenu);
