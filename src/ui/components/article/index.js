@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { TextHighlightable } from "../text-highlight";
 
 
 export const ArticleWrapper = styled.article`
@@ -76,16 +77,18 @@ const LargeBanner = ({ image, title, authors }) => {
     )
 }   
 
-const ArticleMain = ({ text, date }) => {
+const ArticleMain = ({ text, date, onHighlight }) => {
     return (
         <Main>
             <Date>On {date}</Date>
-            { text }
+            <TextHighlightable 
+                content={text}
+                onHighlight={onHighlight}/>
         </Main>
     )
 }
 
-export const ArticleDisplay = ({ article }) => {
+export const ArticleDisplay = ({ article, onHighlight }) => {
     //Destruct
     const { image, title, authors, text, date } = article;
 
@@ -98,7 +101,8 @@ export const ArticleDisplay = ({ article }) => {
 
             <ArticleMain 
                 text={text}
-                date={date}/>
+                date={date}
+                onHighlight={onHighlight}/>
         </ArticleWrapper>
     )
 };

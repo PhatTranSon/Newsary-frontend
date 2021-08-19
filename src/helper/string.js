@@ -11,3 +11,13 @@ export function trimParagraph(paragraph, maxLength = 100) {
 
     return result + "...";
 }
+
+export function isValidWord(word) {
+    //Split to get tokens
+    const tokens = word.trim().split(/\s+/);
+    return tokens.length === 1;
+}
+
+export function processWord(word) {
+    return word.trim();
+}
