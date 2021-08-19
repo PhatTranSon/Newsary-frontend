@@ -3,7 +3,21 @@ import { defaultState } from "./default";
 import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { sagas } from "./sagas";
-import { HIGHLIGHT_MENU_COORDS, HIGHLIGHT_MENU_VISIBLE, HIGHLIGHT_TEXT_ERROR, HIGHLIGHT_TEXT_SELECTED, REQUEST_ARTICLES_ERROR, REQUEST_ARTICLES_LOADING, REQUEST_ARTICLES_SUCCESSFUL, WORDLIST_VISIBLE } from "./mutations";
+import { 
+    TOGGLE_WORDLIST_VISIBLE,
+    CHANGE_WORDLIST_VISIBLE, 
+    HIGHLIGHT_MENU_COORDS, 
+    HIGHLIGHT_MENU_VISIBLE, 
+    HIGHLIGHT_TEXT_ERROR, 
+    HIGHLIGHT_TEXT_SELECTED, 
+    REQUEST_ARTICLES_ERROR, 
+    REQUEST_ARTICLES_LOADING, 
+    REQUEST_ARTICLES_SUCCESSFUL,
+    REQUEST_DICTIONARY_ERROR, 
+    REQUEST_DICTIONARY_LOADING, 
+    REQUEST_DICTIONARY_SUCCESSFULLY, 
+    WORDLIST_VISIBLE 
+} from "./mutations";
 
 //Create saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -83,7 +97,7 @@ export const store = createStore(
                         }
                     };
                     break;
-                case WORDLIST_VISIBLE:
+                case TOGGLE_WORDLIST_VISIBLE:
                     newState = {
                         ...articlePage,
                         wordList: {
@@ -91,6 +105,43 @@ export const store = createStore(
                             visible: !articlePage.wordList.visible
                         }
                     };
+                    break;
+                case CHANGE_WORDLIST_VISIBLE:
+                    newState = {
+                        ...articlePage,
+                        wordList: {
+                            ...articlePage.wordList,
+                            visible: action.visible
+                        }
+                    };
+                    break;
+                case REQUEST_DICTIONARY_SUCCESSFULLY:
+                    newState = {
+                        ...articlePage,
+                        wordList: {
+                            ...articlePage.wordList,
+                            words: [...articlePage.wordList.words, action.word],
+                            loading: false
+                        }
+                    }
+                    break;
+                case REQUEST_DICTIONARY_ERROR:
+                    newState = {
+                        ...articlePage,
+                        wordList: {
+                            ...articlePage.wordList,
+                            error: action.content
+                        }
+                    }
+                    break;
+                case REQUEST_DICTIONARY_LOADING:
+                    newState = {
+                        ...articlePage,
+                        wordList: {
+                            ...articlePage.wordList,
+                            loading: true
+                        }
+                    }
                     break;
                 default:
                     newState = articlePage;

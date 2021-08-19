@@ -6,7 +6,12 @@ export const HIGHLIGHT_TEXT_SELECTED = "HIGHLIGHT_TEXT_SELECTED";
 export const HIGHLIGHT_TEXT_ERROR = "HIGHLIGHT_TEXT_ERROR";
 export const HIGHLIGHT_MENU_VISIBLE = "HIGHLIGHT_MENU_VISIBLE";
 export const HIGHLIGHT_MENU_COORDS = "HIGHLIGHT_MENU_COORDS";
-export const WORDLIST_VISIBLE = "WORDLIST_VISIBLE";
+export const TOGGLE_WORDLIST_VISIBLE = "TOGGLE_WORDLIST_VISIBLE";
+export const CHANGE_WORDLIST_VISIBLE = "CHANGE_WORDLIST_VISIBLE";
+export const REQUEST_DICTIONARY = "REQUEST_DICTIONARY";
+export const REQUEST_DICTIONARY_SUCCESSFULLY = "REQUEST_DICTIONARY_SUCCESSFULL";
+export const REQUEST_DICTIONARY_LOADING = "REQUEST_DICTIONARY_LOADING";
+export const REQUEST_DICTIONARY_ERROR = "REQUEST_DICTIONARY_ERROR";
 
 export function requestArticles() {
     return {
@@ -64,6 +69,39 @@ export function changeHighlightMenuCoords(coords) {
 
 export function toggleWordListVisibility() {
     return {
-        type: WORDLIST_VISIBLE
+        type: TOGGLE_WORDLIST_VISIBLE
     };
+}
+
+export function changeWordListVisibility(visible) {
+    return {
+        type: CHANGE_WORDLIST_VISIBLE,
+        visible
+    };
+}
+
+export function requestDictionary() {
+    return {
+        type: REQUEST_DICTIONARY
+    };
+}
+
+export function requestDictionaryError() {
+    return {
+        type: REQUEST_DICTIONARY_ERROR,
+        content: "Word can not be found"
+    };
+}
+
+export function requestDictionaryLoading() {
+    return {
+        type: REQUEST_DICTIONARY_LOADING
+    };
+}
+
+export function requestDictionarySuccessful(word) {
+    return {
+        type: REQUEST_DICTIONARY_SUCCESSFULLY,
+        word
+    }
 }

@@ -5,7 +5,8 @@ import {
     call
 } from "redux-saga/effects";
 import { getNews } from "../../api/news";
-import { requestArticlesError, requestArticlesLoading, requestArticlesSuccessful, REQUEST_ARTICLES } from "../mutations";
+import { getWordDefinition } from "../../api/word";
+import { requestArticlesError, requestArticlesLoading, requestArticlesSuccessful, requestDictionaryError, requestDictionaryLoading, requestDictionarySuccessful, REQUEST_ARTICLES, REQUEST_DICTIONARY } from "../mutations";
 
 
 function* fetchArticles() {
@@ -25,6 +26,32 @@ function* fetchArticles() {
     }
 }
 
+function* fetchWord() {
+    //Get the word
+    const state = yield select();
+    const word = state.articlePage.highlight.text;
+
+    //Stop if word is not set yet
+    if (!word || word.length === 0) {
+        //TODO: Error handling
+        return;
+    }
+
+    //Set loading to true
+    yield put(requestDictionaryLoading());
+    
+    //Search word meaning in the api
+    try {
+        const wordDefinition = yield call(getWordDefinition, word);
+        yield put(requestDictionarySuccessful(wordDefinition));
+    } catch (error) {
+        //TODO: Error handling
+        console.log(error);
+        yield put(requestDictionaryError());
+    }
+}
+
 export function* sagas() {
     yield takeEvery(REQUEST_ARTICLES, fetchArticles);
+    yield takeEvery(REQUEST_DICTIONARY, fetchWord);
 }

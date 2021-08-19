@@ -18,21 +18,23 @@ export const TextHighlightable = ({ content, onHighlight }) => {
     function onMouseUp() {
         //Get selection
         const selection = window.getSelection();
-        const selectionRange = selection.getRangeAt(0);
 
         //Get the text and coordinates
-        const text = selection.toString();
-        const coords = selectionRange.getBoundingClientRect();
+        if (selection.rangeCount > 0) {
+            const selectionRange = selection.getRangeAt(0);
+            const text = selection.toString();
+            const coords = selectionRange.getBoundingClientRect();
 
-        //Call highlight
-        if (text.length > 0) {
-            onHighlight({
-                text,
-                coords: {
-                    x: coords.x + coords.width + window.scrollX,
-                    y: coords.y + coords.height + window.scrollY
-                }
-            });
+            //Call highlight
+            if (text.length > 0) {
+                onHighlight({
+                    text,
+                    coords: {
+                        x: coords.x + coords.width + window.scrollX,
+                        y: coords.y + coords.height + window.scrollY
+                    }
+                });
+            }
         }
     }
 

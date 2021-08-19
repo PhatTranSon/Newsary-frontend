@@ -19,6 +19,7 @@ export const defaultState = {
         wordList: {
             visible: false,
             loading: false,
+            error: null,
             words: []
         }
     }

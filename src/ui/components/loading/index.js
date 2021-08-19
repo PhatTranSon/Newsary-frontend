@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 
 export const Loading = styled.div`
-    width: 7rem;
-    height: 7rem;
+    width: ${props => props.small ? "3rem" : "7rem"};
+    height: ${props => props.small ? "3rem" : "7rem"};
     border-radius: 50%;
     border: 5px solid black;
     border-top: 5px solid transparent;

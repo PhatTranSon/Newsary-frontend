@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { useOutsideClick } from "../../../hooks/ui";
-import { changeHighlightMenuVisibility } from "../../../state/mutations";
+import { changeHighlightMenuVisibility, changeWordListVisibility, requestDictionary } from "../../../state/mutations";
 
 const MenuWrapper = styled.div`
     display: ${props => props.visible ? "block" : "none"};
@@ -32,7 +32,7 @@ const MenuListItem = styled.li`
 `;
 
 
-const TextMenu = ({ visible, x, y, hideMenu }) => {
+const TextMenu = ({ visible, x, y, hideMenu, lookUp }) => {
     //Handle outside click
     const ref = useRef(null);
     useOutsideClick(ref, hideMenu);
@@ -40,7 +40,7 @@ const TextMenu = ({ visible, x, y, hideMenu }) => {
     return (
         <MenuWrapper ref={ref} visible={visible} x={x} y={y}>
             <MenuList>
-                <MenuListItem onClick={hideMenu}>Look it up</MenuListItem>
+                <MenuListItem onClick={lookUp}>Look it up</MenuListItem>
             </MenuList>
         </MenuWrapper>
     );
@@ -58,6 +58,11 @@ function mapDispatchToProps(dispatch, ownProps) {
     return {
         hideMenu: function() {
             dispatch(changeHighlightMenuVisibility(false));
+        },
+        lookUp: function() {
+            dispatch(changeWordListVisibility(true));
+            dispatch(changeHighlightMenuVisibility(false))
+            dispatch(requestDictionary());
         }
     };
 }
