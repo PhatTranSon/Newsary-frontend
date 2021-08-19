@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { trimParagraph } from "../../../helper/string";
+import { Loading } from "../loading";
+import { connect } from "react-redux";
 
 
 const Article = styled.article`
@@ -46,12 +48,9 @@ const Date = styled.p`
 
 `;
 
-export const NewsSection = styled.section`
-    width: 60%;
-    margin: 0 auto;
-`
+const NewsWrapper = styled.section``;
 
-export const NewsCard = ({ article }) => {
+const NewsCard = ({ article }) => {
     //Get attribute
     const { id, title, image, text, date } = article;
 
@@ -72,3 +71,24 @@ export const NewsCard = ({ article }) => {
         </Article>
     )
 }
+
+const NewsSection = ({ articles, loading }) => {
+    return (
+        loading ?
+        <Loading /> :
+        <NewsWrapper>
+        {
+            articles.map((article, index) => <NewsCard key={index} article={article}/>)
+        }
+        </NewsWrapper>
+    );
+};
+
+function mapStateToProps(state) {
+    return {
+        articles: state.homePage.allArticles.length > 0 ? state.homePage.allArticles.slice(1) : [],
+        loading: state.homePage.loading,
+    };
+}
+
+export const ConnectedNewsSection = connect(mapStateToProps)(NewsSection);

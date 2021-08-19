@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { TextHighlightable } from "../text-highlight";
+import { connect } from "react-redux";
 
 
 export const ArticleWrapper = styled.article`
@@ -88,7 +89,7 @@ const ArticleMain = ({ text, date, onHighlight }) => {
     )
 }
 
-export const ArticleDisplay = ({ article, onHighlight }) => {
+const ArticleDisplay = ({ article }) => {
     //Destruct
     const { image, title, authors, text, date } = article;
 
@@ -101,8 +102,20 @@ export const ArticleDisplay = ({ article, onHighlight }) => {
 
             <ArticleMain 
                 text={text}
-                date={date}
-                onHighlight={onHighlight}/>
+                date={date}/>
         </ArticleWrapper>
     )
 };
+
+function mapStateToProps(state, ownProps) {
+    //Get article id from own props
+    const articleId = +(ownProps.articleId);
+    const article = state.homePage.allArticles.find(item => item.id == articleId);
+
+    //Return right article
+    return {
+        article
+    };
+}
+
+export const ConnectedArticleDisplay = connect(mapStateToProps)(ArticleDisplay);

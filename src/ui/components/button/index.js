@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Button = styled.a`
+export const Button = styled.button`
     background-color: ${props => (props.inverted ? props.theme.gray : props.theme.primaryColor)};
     color: ${props => (props.inverted ? props.theme.primaryColor : props.theme.white)};
     display: inline-block;
@@ -9,6 +9,8 @@ export const Button = styled.a`
     border-radius: 0.5rem;
     margin-right: 0.5rem;
     cursor: pointer;
+    border: none;
+    width: ${props => props.w || "auto"};
 
     &:hover {
         background-color: ${props => (props.inverted ? props.theme.grayColorDark : props.theme.primaryColorDark)};

@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "../button";
 import { PlaceHolderHero } from "./placeholder";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 
 //News components
@@ -50,26 +51,32 @@ const TextSection = styled.div`
     }
 `;
 
-export const Hero = ({ article, loading }) => {
-    const { id, title, image, authors } = article;
-
+export const Hero = ({ article }) => {
     return (
-        loading ?
-        <>
-            <PlaceHolderHero />
-        </> :
+        article ?
         <>
             <Wrapper>
-                <Image src={image} alt="Articles image"/>
+                <Image src={article.image} alt="Articles image"/>
                 <Veil/>
                 <TextSection>
-                    <h1>{title}</h1>
-                    <h2>By {authors}</h2>
-                    <Link to={`/news/${id}`}>
+                    <h1>{article.title}</h1>
+                    <h2>By {article.authors}</h2>
+                    <Link to={`/news/${article.id}`}>
                         <Button>See more</Button>
                     </Link>
                 </TextSection>
             </Wrapper>
-        </>
+        </> :
+        <>
+            <PlaceHolderHero />
+        </> 
     )
 }
+
+function mapStateToProps(state) {
+    return {
+        article: state.homePage.allArticles.length > 0 ? state.homePage.allArticles[0] : null
+    };
+}
+
+export const ConnectedHero = connect(mapStateToProps)(Hero);

@@ -1,37 +1,39 @@
-import React from "react";
-import { Hero } from "../components/hero";
-import { useNews } from "../../hooks/news";
-import { NewsCard, NewsSection } from "../components/card";
-import { Loading } from "../components/loading";
+import React, { useEffect } from "react";
+import { ConnectedHero } from "../components/hero";
+import { ConnectedNewsSection } from "../components/card";
+import { connect } from "react-redux";
+import { requestArticles } from "../../state/mutations";
+import { Button } from "../components/button";
+import { Layout } from "../components/layout";
 
-export const Home = () => {
-    //Use news hook
-    const { 
-        articles, 
-        error, 
-        requestArticles 
-    } = useNews();
-
-    //Get the articles
-    const loading = articles.length === 0;
-    const firstArticle = loading ? [] : articles[0];
-    const remainingArticles = loading ? [] : articles.slice(1);
+const Home = ({ render, getArticles }) => {
+    useEffect(() => {
+        if (render) getArticles();
+    });
 
     return (
         <>
-            <Hero loading={loading} article={firstArticle}/>
-            {
-                loading ? 
-                <Loading/> :
-                <>
-                    <NewsSection>
-                    {
-                        remainingArticles
-                            .map((article, index) => <NewsCard key={index} article={article}/>)
-                    }
-                    </NewsSection>
-                </>
-            }
+            <ConnectedHero/>
+            <Layout w="60%">
+                <ConnectedNewsSection />
+                <Button w="100%" onClick={getArticles}>Load more</Button>
+            </Layout>
         </>
     )
+};
+
+function mapStateToProps(state) {
+    return {
+        render: state.homePage.allArticles.length === 0
+    }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getArticles: function() {
+            dispatch(requestArticles());
+        }
+    }
+};
+
+export const ConnectedHome = connect(mapStateToProps, mapDispatchToProps)(Home);
