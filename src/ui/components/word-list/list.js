@@ -1,9 +1,10 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { Loading } from "../loading";
-import { useOutsideClick } from "../../../hooks/ui";
+import { useOutsideClick, useScrollToBottom } from "../../../hooks/ui";
 import { toggleWordListVisibility } from "../../../state/mutations";
 import { useRef } from "react";
+import { breakpoints } from "../../styling/theme";
 
 const Wrapper = styled.div`
     width: 25vw;
@@ -16,6 +17,10 @@ const Wrapper = styled.div`
     border-radius: 0.5rem;
     box-shadow: 0 0 1.5rem ${props => props.theme.gray};
     overflow-y: scroll;
+
+    ${breakpoints.sm} {
+        width: 80vw;
+    }
 `;
 
 const Cards = styled.ul`
@@ -57,6 +62,9 @@ const List = ({ loading, visible, words, hideList }) => {
     //Outside click
     const ref = useRef(null);
     useOutsideClick(ref, hideList);
+
+    //Scroll to bottom
+    useScrollToBottom(ref, loading);
 
     return (
         visible ?

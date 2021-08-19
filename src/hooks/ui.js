@@ -20,3 +20,12 @@ export function useOutsideClick(ref, callback) {
 
     return isOutsideClick;
 }
+
+export function useScrollToBottom(ref, contentLoading) {
+    useEffect(() => {
+        if (ref.current && contentLoading) {
+            const element = ref.current;
+            element.scrollTop = element.scrollHeight;
+        }
+    }, [ref, contentLoading]);
+}

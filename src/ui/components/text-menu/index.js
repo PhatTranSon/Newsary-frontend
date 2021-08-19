@@ -1,8 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef} from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { useOutsideClick } from "../../../hooks/ui";
-import { changeHighlightMenuVisibility, changeWordListVisibility, requestDictionary } from "../../../state/mutations";
+import { 
+    changeHighlightMenuVisibility, 
+    changeWordListVisibility, 
+    requestDictionary 
+} from "../../../state/mutations";
 
 const MenuWrapper = styled.div`
     display: ${props => props.visible ? "block" : "none"};
