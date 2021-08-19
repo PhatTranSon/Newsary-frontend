@@ -12,11 +12,27 @@ export const REQUEST_DICTIONARY = "REQUEST_DICTIONARY";
 export const REQUEST_DICTIONARY_SUCCESSFULLY = "REQUEST_DICTIONARY_SUCCESSFULL";
 export const REQUEST_DICTIONARY_LOADING = "REQUEST_DICTIONARY_LOADING";
 export const REQUEST_DICTIONARY_ERROR = "REQUEST_DICTIONARY_ERROR";
+export const CHANGE_ERROR_VISIBILITY = "CHANGE_ERROR_VISIBILITY";
+export const CHANGE_ERROR_CONTENT = "CHANGE_ERROR_CONTENT";
+
+export function changeErrorVisibility(visible) {
+    return {
+        type: CHANGE_ERROR_VISIBILITY,
+        visible
+    };
+}
+
+export function changeErrorContent(content) {
+    return {
+        type: CHANGE_ERROR_CONTENT,
+        content
+    };
+}
 
 export function requestArticles() {
     return {
         type: REQUEST_ARTICLES
-    }
+    };
 }
 
 export function requestArticlesSuccessful(articles) {
@@ -47,8 +63,7 @@ export function textHighlight(text) {
 
 export function textHighlightError() {
     return {
-        type: HIGHLIGHT_TEXT_ERROR,
-        content: "Selected text should be a word"
+        type: HIGHLIGHT_TEXT_ERROR
     };
 }
 
@@ -88,8 +103,7 @@ export function requestDictionary() {
 
 export function requestDictionaryError() {
     return {
-        type: REQUEST_DICTIONARY_ERROR,
-        content: "Word can not be found"
+        type: REQUEST_DICTIONARY_ERROR
     };
 }
 
@@ -103,5 +117,5 @@ export function requestDictionarySuccessful(word) {
     return {
         type: REQUEST_DICTIONARY_SUCCESSFULLY,
         word
-    }
+    };
 }

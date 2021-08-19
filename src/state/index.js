@@ -15,8 +15,9 @@ import {
     REQUEST_ARTICLES_SUCCESSFUL,
     REQUEST_DICTIONARY_ERROR, 
     REQUEST_DICTIONARY_LOADING, 
-    REQUEST_DICTIONARY_SUCCESSFULLY, 
-    WORDLIST_VISIBLE 
+    REQUEST_DICTIONARY_SUCCESSFULLY,
+    CHANGE_ERROR_CONTENT,
+    CHANGE_ERROR_VISIBILITY
 } from "./mutations";
 
 //Create saga middleware
@@ -26,6 +27,26 @@ const loggerMiddleware = createLogger();
 //Create redux store
 export const store = createStore(
     combineReducers({
+        error: function(error = defaultState.error, action) {
+            let newState;
+            switch(action.type) {
+                case CHANGE_ERROR_CONTENT:
+                    newState = {
+                        ...error,
+                        content: action.content
+                    }
+                    break;
+                case CHANGE_ERROR_VISIBILITY:
+                    newState = {
+                        ...error,
+                        visible: action.visible
+                    };
+                    break;
+                default:
+                    newState = error;
+            }
+            return newState;
+        },
         homePage: function(homePage = defaultState.homePage, action) {
             let newState;
             switch(action.type) {
@@ -130,7 +151,8 @@ export const store = createStore(
                         ...articlePage,
                         wordList: {
                             ...articlePage.wordList,
-                            error: action.content
+                            error: action.content,
+                            loading: false
                         }
                     }
                     break;

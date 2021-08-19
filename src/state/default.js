@@ -1,15 +1,17 @@
 export const defaultState = {
+    error: {
+        visible: false,
+        content: null
+    },
     homePage: {
         loading: true,
-        error: null,
         allArticles: [],
         currentId: 0
     },
     articlePage: {
         articleId: 0,
         highlight: {
-            text: null,
-            error: null
+            text: null
         },
         menu: {
             visible: false,
@@ -19,7 +21,6 @@ export const defaultState = {
         wordList: {
             visible: false,
             loading: false,
-            error: null,
             words: []
         }
     }

@@ -6,7 +6,7 @@ import {
 } from "redux-saga/effects";
 import { getNews } from "../../api/news";
 import { getWordDefinition } from "../../api/word";
-import { requestArticlesError, requestArticlesLoading, requestArticlesSuccessful, requestDictionaryError, requestDictionaryLoading, requestDictionarySuccessful, REQUEST_ARTICLES, REQUEST_DICTIONARY } from "../mutations";
+import { changeErrorContent, changeErrorVisibility, requestArticlesError, requestArticlesLoading, requestArticlesSuccessful, requestDictionaryError, requestDictionaryLoading, requestDictionarySuccessful, REQUEST_ARTICLES, REQUEST_DICTIONARY } from "../mutations";
 
 
 function* fetchArticles() {
@@ -22,6 +22,8 @@ function* fetchArticles() {
         const articles = yield call(getNews, 10, currentId);
         yield put(requestArticlesSuccessful(articles));
     } catch (error) {
+        yield put(changeErrorVisibility(true));
+        yield put(changeErrorContent("Error fetching items"));
         yield put(requestArticlesError());
     }
 }
@@ -46,7 +48,8 @@ function* fetchWord() {
         yield put(requestDictionarySuccessful(wordDefinition));
     } catch (error) {
         //TODO: Error handling
-        console.log(error);
+        yield put(changeErrorVisibility(true));
+        yield put(changeErrorContent("Word does not exist in dictionary"));
         yield put(requestDictionaryError());
     }
 }

@@ -1,10 +1,11 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { Loading } from "../loading";
-import { useOutsideClick, useScrollToBottom } from "../../../hooks/ui";
+import { useOutsideClick } from "../../../hooks/ui";
 import { toggleWordListVisibility } from "../../../state/mutations";
 import { useRef } from "react";
 import { breakpoints } from "../../styling/theme";
+import { EmptyList } from "./empty";
 
 const Wrapper = styled.div`
     width: 25vw;
@@ -26,6 +27,8 @@ const Wrapper = styled.div`
 const Cards = styled.ul`
     list-style-type: none;
     margin: 1rem;
+    display: flex;
+    flex-flow: column-reverse nowrap;
 `;
 
 const CardWrapper = styled.li`
@@ -63,19 +66,20 @@ const List = ({ loading, visible, words, hideList }) => {
     const ref = useRef(null);
     useOutsideClick(ref, hideList);
 
-    //Scroll to bottom
-    useScrollToBottom(ref, loading);
-
     return (
         visible ?
         <Wrapper ref={ref}>
-            <Cards>
-            {
-                words.map((word, index) => <Card key={index} word={word}/>)
-            }
-            </Cards>
             {
                 loading ? <Loading small/> : null
+            }
+            {
+                (words.length === 0 && !loading) ?
+                <EmptyList /> :
+                <Cards>
+                {
+                    words.map((word, index) => <Card key={index} word={word}/>)
+                }
+                </Cards>
             }
         </Wrapper> :
         null
