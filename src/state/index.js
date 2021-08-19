@@ -3,7 +3,7 @@ import { defaultState } from "./default";
 import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { sagas } from "./sagas";
-import { HIGHLIGHT_MENU_COORDS, HIGHLIGHT_MENU_VISIBLE, HIGHLIGHT_TEXT_ERROR, HIGHLIGHT_TEXT_SELECTED, REQUEST_ARTICLES_ERROR, REQUEST_ARTICLES_LOADING, REQUEST_ARTICLES_SUCCESSFUL } from "./mutations";
+import { HIGHLIGHT_MENU_COORDS, HIGHLIGHT_MENU_VISIBLE, HIGHLIGHT_TEXT_ERROR, HIGHLIGHT_TEXT_SELECTED, REQUEST_ARTICLES_ERROR, REQUEST_ARTICLES_LOADING, REQUEST_ARTICLES_SUCCESSFUL, WORDLIST_VISIBLE } from "./mutations";
 
 //Create saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -80,6 +80,15 @@ export const store = createStore(
                             visible: articlePage.menu.visible,
                             x: action.x,
                             y: action.y,
+                        }
+                    };
+                    break;
+                case WORDLIST_VISIBLE:
+                    newState = {
+                        ...articlePage,
+                        wordList: {
+                            ...articlePage.wordList,
+                            visible: !articlePage.wordList.visible
                         }
                     };
                     break;

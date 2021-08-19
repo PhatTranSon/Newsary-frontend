@@ -1,11 +1,11 @@
-import { WordListButton } from "./button";
-import { List } from "./list";
+import { ConnectedWordListButton } from "./button";
+import { ConnectedList } from "./list";
 
-export const WordList = ({ visible }) => {
+export const WordList = () => {
     return (
         <>
-            <WordListButton />
-            <List visible={visible}/>
+            <ConnectedWordListButton />
+            <ConnectedList />
         </>
     )
 }

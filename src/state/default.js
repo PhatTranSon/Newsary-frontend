@@ -17,7 +17,8 @@ export const defaultState = {
             y: 0
         },
         wordList: {
-            isVisible: false,
+            visible: false,
+            loading: false,
             words: []
         }
     }

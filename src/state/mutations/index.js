@@ -6,6 +6,7 @@ export const HIGHLIGHT_TEXT_SELECTED = "HIGHLIGHT_TEXT_SELECTED";
 export const HIGHLIGHT_TEXT_ERROR = "HIGHLIGHT_TEXT_ERROR";
 export const HIGHLIGHT_MENU_VISIBLE = "HIGHLIGHT_MENU_VISIBLE";
 export const HIGHLIGHT_MENU_COORDS = "HIGHLIGHT_MENU_COORDS";
+export const WORDLIST_VISIBLE = "WORDLIST_VISIBLE";
 
 export function requestArticles() {
     return {
@@ -58,5 +59,11 @@ export function changeHighlightMenuCoords(coords) {
         type: HIGHLIGHT_MENU_COORDS,
         x: coords.x,
         y: coords.y
+    };
+}
+
+export function toggleWordListVisibility() {
+    return {
+        type: WORDLIST_VISIBLE
     };
 }

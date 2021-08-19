@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import menuImage from "../../../image/menu.svg";
+import { toggleWordListVisibility } from "../../../state/mutations";
+import { connect } from "react-redux";
 
 const Wrapper = styled.button`
     position: fixed;
@@ -22,10 +24,20 @@ const Image = styled.img`
 
 `;
 
-export const WordListButton = () => {
+const WordListButton = ({ openWordList }) => {
     return (
-        <Wrapper>
+        <Wrapper onClick={openWordList}>
             <Image src={menuImage} alt="word list button"/>
         </Wrapper>
     )
 }
+
+function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        openWordList: function() {
+            dispatch(toggleWordListVisibility());
+        }
+    }
+}
+
+export const ConnectedWordListButton = connect(null, mapDispatchToProps)(WordListButton);
