@@ -14,6 +14,8 @@ import { Article } from "./pages/article";
 import { Provider } from "react-redux";
 import { store } from "../state";
 import { ConnectedErrorMessage } from "./components/error";
+import { ConnectedSignUp } from "./pages/signup";
+import { ConnectedLogin } from "./pages/login";
 
 export const App = () => {
     return (
@@ -27,6 +29,12 @@ export const App = () => {
                         <Route path="/news/:id" children={<Article />}/>
                         <Route exact path="/">
                             <ConnectedHome />
+                        </Route>
+                        <Route path="/register">
+                            <ConnectedSignUp />
+                        </Route>
+                        <Route path="/login">
+                            <ConnectedLogin />
                         </Route>
                     </Switch>
                     <Footer/>

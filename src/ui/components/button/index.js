@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Button = styled.button`
     background-color: ${props => (props.inverted ? props.theme.gray : props.theme.primaryColor)};
     color: ${props => (props.inverted ? props.theme.primaryColor : props.theme.white)};
+    font-family: 'Poppins', sans-seriff;
     display: inline-block;
     text-decoration: none;
     padding: 0.5rem;

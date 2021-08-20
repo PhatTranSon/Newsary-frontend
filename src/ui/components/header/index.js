@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button, ButtonGroup } from "../button";
 import { Icon } from "../typography";
@@ -15,8 +16,13 @@ export const Header = () => {
         <Nav>
             <Icon>Newsary</Icon>
             <ButtonGroup>
-                <Button href="https://google.com" inverted>Log in</Button>
-                <Button href="https://google.com">Sign up</Button>
+                <Link to="/login">
+                    <Button inverted>Log in</Button>
+                </Link>
+        
+                <Link to="/register">
+                    <Button>Sign up</Button>
+                </Link>
             </ButtonGroup>
         </Nav>
     )
