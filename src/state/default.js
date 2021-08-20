@@ -1,5 +1,5 @@
 export const defaultState = {
-    error: {
+    message: {
         visible: false,
         content: null
     },

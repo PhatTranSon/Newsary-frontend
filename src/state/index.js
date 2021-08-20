@@ -16,8 +16,8 @@ import {
     REQUEST_DICTIONARY_ERROR, 
     REQUEST_DICTIONARY_LOADING, 
     REQUEST_DICTIONARY_SUCCESSFULLY,
-    CHANGE_ERROR_CONTENT,
-    CHANGE_ERROR_VISIBILITY
+    CHANGE_MESSAGE_CONTENT,
+    CHANGE_MESSAGE_VISIBILITY
 } from "./mutations";
 
 //Create saga middleware
@@ -27,23 +27,23 @@ const loggerMiddleware = createLogger();
 //Create redux store
 export const store = createStore(
     combineReducers({
-        error: function(error = defaultState.error, action) {
+        message: function(message = defaultState.message, action) {
             let newState;
             switch(action.type) {
-                case CHANGE_ERROR_CONTENT:
+                case CHANGE_MESSAGE_CONTENT:
                     newState = {
-                        ...error,
+                        ...message,
                         content: action.content
                     }
                     break;
-                case CHANGE_ERROR_VISIBILITY:
+                case CHANGE_MESSAGE_VISIBILITY:
                     newState = {
-                        ...error,
+                        ...message,
                         visible: action.visible
                     };
                     break;
                 default:
-                    newState = error;
+                    newState = message;
             }
             return newState;
         },

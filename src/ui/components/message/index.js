@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { changeErrorVisibility } from "../../../state/mutations";
+import { changeMessageVisibility } from "../../../state/mutations";
 import { connect } from "react-redux";
 import clearIcon from "../../../image/clear.svg";
 
@@ -24,7 +24,7 @@ const Icon = styled.img`
     display: block;
 `;
 
-const ErrorMessage = ({ content, visible, hide }) => {
+const Message = ({ content, visible, hide }) => {
     return (
         visible ?
         <Wrapper>
@@ -42,17 +42,17 @@ const ErrorMessage = ({ content, visible, hide }) => {
 
 function mapStateToProps(state, ownProps) {
     return {
-        content: state.error.content,
-        visible: state.error.visible
+        content: state.message.content,
+        visible: state.message.visible
     };
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         hide: function() {
-            dispatch(changeErrorVisibility(false));
+            dispatch(changeMessageVisibility(false));
         }
     };
 }
 
-export const ConnectedErrorMessage = connect(mapStateToProps, mapDispatchToProps)(ErrorMessage);
+export const ConnectedMessage = connect(mapStateToProps, mapDispatchToProps)(Message);

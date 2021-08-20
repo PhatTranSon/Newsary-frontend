@@ -6,7 +6,7 @@ import {
 } from "redux-saga/effects";
 import { getNews } from "../../api/news";
 import { getWordDefinition } from "../../api/word";
-import { changeErrorContent, changeErrorVisibility, requestArticlesError, requestArticlesLoading, requestArticlesSuccessful, requestDictionaryError, requestDictionaryLoading, requestDictionarySuccessful, REQUEST_ARTICLES, REQUEST_DICTIONARY } from "../mutations";
+import { changeMessageContent, changeMessageVisibility, requestArticlesError, requestArticlesLoading, requestArticlesSuccessful, requestDictionaryError, requestDictionaryLoading, requestDictionarySuccessful, REQUEST_ARTICLES, REQUEST_DICTIONARY } from "../mutations";
 
 
 function* fetchArticles() {
@@ -22,8 +22,8 @@ function* fetchArticles() {
         const articles = yield call(getNews, 10, currentId);
         yield put(requestArticlesSuccessful(articles));
     } catch (error) {
-        yield put(changeErrorVisibility(true));
-        yield put(changeErrorContent("Error fetching items"));
+        yield put(changeMessageVisibility(true));
+        yield put(changeMessageContent("Error fetching items"));
         yield put(requestArticlesError());
     }
 }
@@ -48,8 +48,8 @@ function* fetchWord() {
         yield put(requestDictionarySuccessful(wordDefinition));
     } catch (error) {
         //TODO: Error handling
-        yield put(changeErrorVisibility(true));
-        yield put(changeErrorContent("Word does not exist in dictionary"));
+        yield put(changeMessageVisibility(true));
+        yield put(changeMessageContent("Word does not exist in dictionary"));
         yield put(requestDictionaryError());
     }
 }

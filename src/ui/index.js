@@ -13,7 +13,7 @@ import {
 import { Article } from "./pages/article";
 import { Provider } from "react-redux";
 import { store } from "../state";
-import { ConnectedErrorMessage } from "./components/error";
+import { ConnectedMessage } from "./components/message";
 import { ConnectedSignUp } from "./pages/signup";
 import { ConnectedLogin } from "./pages/login";
 
@@ -24,7 +24,7 @@ export const App = () => {
                 <GlobalStyle/>
                 <ThemeProvider theme={theme}>
                     <Header/>
-                    <ConnectedErrorMessage />
+                    <ConnectedMessage />
                     <Switch>
                         <Route path="/news/:id" children={<Article />}/>
                         <Route exact path="/">
