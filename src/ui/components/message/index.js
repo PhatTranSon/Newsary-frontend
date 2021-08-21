@@ -5,7 +5,7 @@ import clearIcon from "../../../image/clear.svg";
 
 
 const Wrapper = styled.div`
-    background-color: ${props => props.theme.dangerColor};
+    background-color: ${props => props.theme.primaryColor};
     color: ${props => props.theme.white};
     position: fixed;
     top: 2rem;

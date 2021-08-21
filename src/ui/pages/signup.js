@@ -1,7 +1,9 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { requestSignup } from "../../state/mutations";
+import { Loading } from "../components/loading";
+import { changeSignupCity, changeSignupCountry, changeSignupEmail, changeSignupFullname, changeSignupUsername, changeSignupPassword, requestSignup } from "../../state/mutations";
 import { Form, FormButton, FormGroup, FormInput, FormLabel, FormSubtitle, FormTitle } from "../components/form";
+import { Redirect } from "react-router-dom";
 
 const Wrapper = styled.main`
     width: 100%;
@@ -15,7 +17,23 @@ const Wrapper = styled.main`
     justify-content: center;
 `;
 
-const SignUp = ({ signup }) => {
+const SignUp = ({ 
+    fullname,
+    username,
+    email,
+    password,
+    city,
+    country,
+    updateFullname,
+    updateUsername,
+    updateEmail,
+    updatePassword,
+    updateCity,
+    updateCountry,
+    signup, 
+    loading, 
+    redirect 
+}) => {
     function onFormSubmit(element) {
         //Prevent redirection
         element.preventDefault();
@@ -38,56 +56,86 @@ const SignUp = ({ signup }) => {
     }
 
     return (
+        redirect ?
+        <Redirect to="/login"/> :
         <Wrapper>
             <Form onSubmit={onFormSubmit}>
-                <FormTitle>Create an account</FormTitle>
-                <FormSubtitle>Create an account to save words and articles</FormSubtitle>
-                <FormGroup>
-                    <FormInput type="text" placeholder="Username" id="username" name="username"/>
-                    <FormLabel htmlFor="username">Username</FormLabel>
-                </FormGroup>
+                {
+                    loading ?
+                    <Loading /> :
+                    <>
+                        <FormTitle>Create an account</FormTitle>
+                        <FormSubtitle>Create an account to save words and articles</FormSubtitle>
+                        <FormGroup>
+                            <FormInput type="text" placeholder="Username" id="username" name="username" 
+                                value={username} onChange={updateUsername} />
+                            <FormLabel htmlFor="username">Username</FormLabel>
+                        </FormGroup>
 
-                <FormGroup>
-                    <FormInput type="text" placeholder="Full name" id="fullname" name="fullname"/>
-                    <FormLabel htmlFor="fullname">Full name</FormLabel>
-                </FormGroup>
+                        <FormGroup>
+                            <FormInput type="text" placeholder="Full name" id="fullname" name="fullname"
+                                value={fullname} onChange={updateFullname}/>
+                            <FormLabel htmlFor="fullname">Full name</FormLabel>
+                        </FormGroup>
 
-                <FormGroup>
-                    <FormInput type="email" placeholder="Email" id="email" name="email"/>
-                    <FormLabel htmlFor="email">Email</FormLabel>
-                </FormGroup>
+                        <FormGroup>
+                            <FormInput type="email" placeholder="Email" id="email" name="email"
+                                value={email} onChange={updateEmail}/>
+                            <FormLabel htmlFor="email">Email</FormLabel>
+                        </FormGroup>
 
-                <FormGroup>
-                    <FormInput type="password" placeholder="Password" id="password" name="password"/>
-                    <FormLabel htmlFor="password">Password</FormLabel>
-                </FormGroup>
+                        <FormGroup>
+                            <FormInput type="password" placeholder="Password" id="password" name="password"
+                                value={password} onChange={updatePassword}/>
+                            <FormLabel htmlFor="password">Password</FormLabel>
+                        </FormGroup>
 
-                <FormGroup>
-                    <FormInput type="text" placeholder="City" id="city" name="city"/>
-                    <FormLabel htmlFor="city">City</FormLabel>
-                </FormGroup>
+                        <FormGroup>
+                            <FormInput type="text" placeholder="City" id="city" name="city"
+                                value={city} onChange={updateCity}/>
+                            <FormLabel htmlFor="city">City</FormLabel>
+                        </FormGroup>
 
-                <FormGroup>
-                    <FormInput type="text" placeholder="Country" name="country"/>
-                    <FormLabel htmlFor="country">Country</FormLabel>
-                </FormGroup>
+                        <FormGroup>
+                            <FormInput type="text" placeholder="Country" name="country"
+                                value={country} onChange={updateCountry}/>
+                            <FormLabel htmlFor="country">Country</FormLabel>
+                        </FormGroup>
 
-                <FormButton>Create account</FormButton>
+                        <FormButton>Create account</FormButton>
+                    </>
+                }
             </Form>
         </Wrapper>
     )
 }
 
 function mapStateToProps(state, ownProps) {
-    return {
-        redirect: state.authentication.register.redirect
-    };
+    return state.authentication.register;
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         signup: function(user) {
             dispatch(requestSignup(user));
+        },
+        updateFullname: function(element) {
+            dispatch(changeSignupFullname(element.target.value));
+        },
+        updateUsername: function(element) {
+            dispatch(changeSignupUsername(element.target.value));
+        },
+        updateEmail: function(element) {
+            dispatch(changeSignupEmail(element.target.value));
+        },
+        updatePassword: function(element) {
+            dispatch(changeSignupPassword(element.target.value));
+        },
+        updateCity: function(element) {
+            dispatch(changeSignupCity(element.target.value));
+        },
+        updateCountry: function(element) {
+            dispatch(changeSignupCountry(element.target.value));
         }
     };
 }

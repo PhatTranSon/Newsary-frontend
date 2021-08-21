@@ -7,7 +7,26 @@ import {
 import { login, signup } from "../../api/auth";
 import { getNews } from "../../api/news";
 import { getWordDefinition } from "../../api/word";
-import { changeLoginLoading, changeMessageContent, changeMessageVisibility, changeRedirectStatus, changeSignupLoading, requestArticlesError, requestArticlesLoading, requestArticlesSuccessful, requestDictionaryError, requestDictionaryLoading, requestDictionarySuccessful, REQUEST_ARTICLES, REQUEST_DICTIONARY, REQUEST_LOGIN, REQUEST_SIGNUP } from "../mutations";
+import { 
+    changeLoggedInStatus,
+    changeLoginLoading, 
+    changeMessageContent, 
+    changeMessageVisibility,
+    changeRedirectStatus, 
+    changeSignupLoading, 
+    changeToken, 
+    requestArticlesError, 
+    requestArticlesLoading, 
+    requestArticlesSuccessful, 
+    requestDictionaryError, 
+    requestDictionaryLoading, 
+    requestDictionarySuccessful, 
+    REQUEST_ARTICLES, 
+    REQUEST_DICTIONARY, 
+    REQUEST_LOGIN, 
+    REQUEST_LOGOUT, 
+    REQUEST_SIGNUP 
+} from "../mutations";
 
 
 function* fetchArticles() {
@@ -61,29 +80,47 @@ function* fetchSignup({ user }) {
     try {
         const _ = yield call(signup, user);
         yield put(changeRedirectStatus(true));
+        yield showMessage("Registration complete. Please login using created account");
     } catch (error) {
         if (error.response) {
-            console.log(error.response.data);
             //Get the error message
-            const data = error.response.data;
-            yield showMessage(data.error);
+            const { errors } = error.response.data;
+            yield showMessage(errors[0].msg || errors);
         } else {
             yield showMessage("Invalid field or account created");
         }
+    } finally {
+        yield put(changeSignupLoading(false));
     }
 }
 
-function* fetchLogin({ user }) {
+function* fetchLogin() {
+    //Get user from state
+    const state = yield select();
+    const user = {
+        email: state.authentication.login.email,
+        password: state.authentication.login.password
+    };
+
     //Change loading to true
     yield put(changeLoginLoading(true));
 
     //Make log in request
     try {
         //Get login details
-        const loginDetails = yield call(login, user);
+        const { token } = yield call(login, user);
+        yield put(changeToken(token));
+        yield put(changeLoggedInStatus(true));
     } catch (error) {
         yield showMessage("Invalid credentials");
+    } finally {
+        yield put(changeLoginLoading(false));
     }
+}
+
+function* fetchLogout() {
+    yield put(changeLoggedInStatus(false));
+    yield put(changeToken(null));
 }
 
 function* showMessage(message) {
@@ -96,4 +133,5 @@ export function* sagas() {
     yield takeEvery(REQUEST_DICTIONARY, fetchWord);
     yield takeEvery(REQUEST_SIGNUP, fetchSignup);
     yield takeEvery(REQUEST_LOGIN, fetchLogin);
+    yield takeEvery(REQUEST_LOGOUT, fetchLogout);
 }

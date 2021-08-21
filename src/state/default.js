@@ -1,10 +1,18 @@
 export const defaultState = {
     authentication: {
         register: {
+            username: "",
+            fullname: "",
+            email: "",
+            password: "",
+            city: "",
+            country: "",
             loading: false,
             redirect: false,
         },
         login: {
+            email: "",
+            password: "",
             loading: false,
             loggedIn: false,
             token: null

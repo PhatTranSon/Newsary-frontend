@@ -1,6 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { Header } from "./components/header";
+import { ConnectedHeader } from "./components/header";
 import { Footer } from "./components/footer";
 import { ConnectedHome } from "./pages/home";
 import { GlobalStyle } from "./styling/global";
@@ -23,7 +23,7 @@ export const App = () => {
             <Provider store={store}>
                 <GlobalStyle/>
                 <ThemeProvider theme={theme}>
-                    <Header/>
+                    <ConnectedHeader />
                     <ConnectedMessage />
                     <Switch>
                         <Route path="/news/:id" children={<Article />}/>
