@@ -38,7 +38,7 @@ export const App = () => {
                         <Route path="/login">
                             <ConnectedLogin />
                         </Route>
-                        <ConnectedPrivateRoute>
+                        <ConnectedPrivateRoute path="/dashboard">
                             <ConnectedDashboard />
                         </ConnectedPrivateRoute>
                     </Switch>
