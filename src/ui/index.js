@@ -16,6 +16,8 @@ import { store } from "../state";
 import { ConnectedMessage } from "./components/message";
 import { ConnectedSignUp } from "./pages/signup";
 import { ConnectedLogin } from "./pages/login";
+import { ConnectedPrivateRoute } from "./components/authroute";
+import { ConnectedDashboard } from "./pages/dashboard";
 
 export const App = () => {
     return (
@@ -36,6 +38,9 @@ export const App = () => {
                         <Route path="/login">
                             <ConnectedLogin />
                         </Route>
+                        <ConnectedPrivateRoute>
+                            <ConnectedDashboard />
+                        </ConnectedPrivateRoute>
                     </Switch>
                     <Footer/>
                 </ThemeProvider>

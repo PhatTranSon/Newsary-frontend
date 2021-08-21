@@ -29,7 +29,12 @@ const Header = ({ loggedIn, logout }) => {
                 <ButtonGroup>
                     {
                         loggedIn ?
-                        <Button onClick={logUserOut}>Log out</Button> :
+                        <>
+                            <Link to="/dashboard">
+                                <Button inverted>My Dashboard</Button>
+                            </Link>
+                            <Button onClick={logUserOut}>Log out</Button>
+                        </> :
                         <>
                             <Link to="/login">
                                 <Button inverted>Log in</Button>
