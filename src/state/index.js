@@ -31,7 +31,13 @@ import {
     CHANGE_LOGIN_PASSWORD,
     CHANGE_LOGIN_LOADING,
     CHANGE_LOGIN_STATUS,
-    CHANGE_TOKEN
+    CHANGE_TOKEN,
+    REQUEST_USER_INFO_SUCCESS,
+    REQUEST_USER_INFO_ERROR,
+    REQUEST_USER_INFO_LOADING,
+    REQUEST_COLLECTIONS_SUCCESS,
+    REQUEST_COLLECTIONS_ERROR,
+    REQUEST_COLLECTIONS_LOADING
 } from "./mutations";
 
 //Create saga middleware
@@ -41,6 +47,78 @@ const loggerMiddleware = createLogger();
 //Create redux store
 export const store = createStore(
     combineReducers({
+        dashboard: function(dashboard = defaultState.dashboard, action) {
+            let newState;
+
+            switch(action.type) {
+                case REQUEST_COLLECTIONS_SUCCESS:
+                    newState = {
+                        ...dashboard,
+                        wordCollections: {
+                            ...dashboard.wordCollections,
+                            content: action.collections
+                        }
+                    };
+                    break;
+                case REQUEST_COLLECTIONS_ERROR:
+                    newState = {
+                        ...dashboard,
+                        wordCollections: {
+                           ...dashboard.wordCollections,
+                            error: true
+                        }
+                    };
+                    break;
+                case REQUEST_COLLECTIONS_LOADING:
+                    newState = {
+                        ...dashboard,
+                        wordCollections: {
+                            ...dashboard.wordCollections,
+                            loading: action.loading
+                        }
+                    };
+                    break;
+                default:
+                    newState = dashboard;
+                    break;
+            }
+
+            return newState;
+        },
+        user: function(user = defaultState.user, action) {
+            let newState;
+
+            switch(action.type) {
+                case REQUEST_USER_INFO_SUCCESS:
+                    newState = {
+                        ...user,
+                        username: action.user.username,
+                        fullname: action.user.fullname,
+                        email: action.user.email,
+                        city: action.user.city,
+                        country: action.user.country
+                    };
+                    break;
+                case REQUEST_USER_INFO_ERROR:
+                    newState = {
+                        ...user,
+                        loading: false,
+                        error: true
+                    };
+                    break;
+                case REQUEST_USER_INFO_LOADING:
+                    newState = {
+                        ...user,
+                        loading: action.loading
+                    };
+                    break;
+                default:
+                    newState = user;
+                    break;
+            }
+
+            return newState;
+        },
         authentication: function(authentication = defaultState.authentication, action) {
             let newState;
 

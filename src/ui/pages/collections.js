@@ -1,5 +1,17 @@
-const Collections = () => {
-    return <h1>Collections</h1>;
-}
+import { ConnectedCollections } from "../components/collections";
+import { ConnectedWelcomeUser } from "../components/user";
+import { CardWrapper } from "../components/cardwrapper";
 
-export const ConnectedCollections = Collections;
+export const Collections = () => {
+    return (
+        <>
+            <CardWrapper>
+                <ConnectedWelcomeUser />
+            </CardWrapper>
+
+            <CardWrapper>   
+                <ConnectedCollections />
+            </CardWrapper>
+        </>
+    );
+}

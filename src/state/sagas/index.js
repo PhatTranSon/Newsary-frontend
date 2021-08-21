@@ -6,6 +6,7 @@ import {
 } from "redux-saga/effects";
 import { login, signup } from "../../api/auth";
 import { getNews } from "../../api/news";
+import { getUserInfo, getUserCollections } from "../../api/user";
 import { getWordDefinition } from "../../api/word";
 import { 
     changeLoggedInStatus,
@@ -18,14 +19,24 @@ import {
     requestArticlesError, 
     requestArticlesLoading, 
     requestArticlesSuccessful, 
+    requestCollections, 
+    requestCollectionsError, 
+    requestCollectionsLoading, 
+    requestCollectionsSuccess, 
     requestDictionaryError, 
     requestDictionaryLoading, 
     requestDictionarySuccessful, 
+    requestUserInfo, 
+    requestUserInfoError, 
+    requestUserInfoLoading, 
+    requestUserInfoSuccess, 
     REQUEST_ARTICLES, 
+    REQUEST_COLLECTIONS, 
     REQUEST_DICTIONARY, 
     REQUEST_LOGIN, 
     REQUEST_LOGOUT, 
-    REQUEST_SIGNUP 
+    REQUEST_SIGNUP, 
+    REQUEST_USER_INFO
 } from "../mutations";
 
 
@@ -111,6 +122,10 @@ function* fetchLogin() {
         const { token } = yield call(login, user);
         yield put(changeToken(token));
         yield put(changeLoggedInStatus(true));
+
+        //Request user info
+        yield put(requestUserInfo());
+        yield put(requestCollections());
     } catch (error) {
         yield showMessage("Invalid credentials");
     } finally {
@@ -121,6 +136,44 @@ function* fetchLogin() {
 function* fetchLogout() {
     yield put(changeLoggedInStatus(false));
     yield put(changeToken(null));
+}
+
+function* fetchUserInfo() {
+    //Get the token
+    const state = yield select();
+    const { token } = state.authentication.login;
+
+    //Set loading
+    yield put(requestUserInfoLoading(true));
+
+    //Fetch user
+    try {
+        const { userFound } = yield call(getUserInfo, token);
+        yield put(requestUserInfoSuccess(userFound));
+    } catch (error) {
+        yield put(requestUserInfoError());
+    } finally {
+        yield put(requestUserInfoLoading(false));
+    }
+}
+
+function* fetchCollections() {
+    //Get the token
+    const state = yield select();
+    const { token } = state.authentication.login;
+
+    //Set loading
+    yield put(requestCollectionsLoading(true));
+
+    //Fetch collections
+    try {
+        const { word_collections } = yield call(getUserCollections, token);
+        yield put(requestCollectionsSuccess(word_collections));
+    } catch (error) {
+        yield put(requestCollectionsError());
+    } finally {
+        yield put(requestCollectionsLoading(false));
+    }
 }
 
 function* showMessage(message) {
@@ -134,4 +187,6 @@ export function* sagas() {
     yield takeEvery(REQUEST_SIGNUP, fetchSignup);
     yield takeEvery(REQUEST_LOGIN, fetchLogin);
     yield takeEvery(REQUEST_LOGOUT, fetchLogout);
+    yield takeEvery(REQUEST_USER_INFO, fetchUserInfo);
+    yield takeEvery(REQUEST_COLLECTIONS, fetchCollections);
 }

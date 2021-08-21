@@ -18,8 +18,21 @@ export const defaultState = {
             token: null
         }
     },
+    dashboard: {
+        wordCollections: {
+            loading: false,
+            error: false,
+            content: []
+        }
+    },
     user: {
-        wordsCollections: []
+        username: "",
+        fullname: "",
+        email: "",
+        city: "",
+        country: "",
+        loading: false,
+        error: false
     },
     message: {
         visible: false,

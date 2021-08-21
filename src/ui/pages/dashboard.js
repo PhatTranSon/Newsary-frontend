@@ -7,7 +7,8 @@ import {
 import styled from "styled-components";
 import bookImage from "../../image/book.svg";
 import quizImage from "../../image/quiz.svg";
-import { ConnectedCollections } from "./collections";
+import { Collections } from "./collections";
+import { ConnectedCreateCollection } from "./createcollections";
 import { ConnectedQuiz } from "./quiz";
 
 const GridWrapper = styled.section`
@@ -56,11 +57,13 @@ const PanelItem = styled.li`
 `;
 
 const Main = styled.div`
+    padding: 2rem;
     background-color: ${props => props.theme.grayColorLight};
 `;
 
 const DashBoard = () => {
-    const { path, url } = useRouteMatch();
+    //Match url
+    const { url } = useRouteMatch();
 
     return (
         <GridWrapper>
@@ -84,11 +87,15 @@ const DashBoard = () => {
             <Main>
                 <Switch>
                     <Route exact path={`${url}`}>
-                        <ConnectedCollections/>
+                        <Collections/>
                     </Route>
 
                     <Route path={`${url}/quiz`}>
                         <ConnectedQuiz/>
+                    </Route>
+
+                    <Route path={`${url}/createcollection`}>
+                        <ConnectedCreateCollection />
                     </Route>
                 </Switch>
             </Main>
@@ -96,4 +103,4 @@ const DashBoard = () => {
     );
 }
 
-export const ConnectedDashboard = DashBoard;
+export const ConnectedDashboard = (DashBoard);

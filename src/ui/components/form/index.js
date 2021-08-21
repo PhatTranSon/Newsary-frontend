@@ -42,7 +42,7 @@ export const FormLabel = styled.label`
 
 export const FormInput = styled.input`
     display: block;
-    width: 94%;
+    width: 100%;
     font-family: 'Poppins', sans-seriff;
     font-size: 1rem;
     padding: 0.75rem;

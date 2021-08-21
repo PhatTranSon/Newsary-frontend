@@ -49,8 +49,72 @@ export const CLEAR_SIGNUP_FORM = "CLEAR_SIGNUP_FORM";
 export const CHANGE_LOGIN_EMAIL = "CHANGE_LOGIN_EMAIL";
 export const CHANGE_LOGIN_PASSWORD = "CHANGE_LOGIN_PASSWORD";
 
-/* Logout */
+/* Logout mutation */
 export const REQUEST_LOGOUT = "REQUEST_LOGOUT";
+
+/* User mutation */
+export const REQUEST_USER_INFO = "REQUEST_USER_INFO";
+export const REQUEST_USER_INFO_SUCCESS = "REQUEST_USER_INFO_SUCCESS";
+export const REQUEST_USER_INFO_LOADING = "REQUEST_USER_INFO_LOADING";
+export const REQUEST_USER_INFO_ERROR = "REQUEST_USER_INFO_ERROR";
+
+/* Word collection mutation */
+export const REQUEST_COLLECTIONS = "REQUEST_COLLECTIONS";
+export const REQUEST_COLLECTIONS_SUCCESS = "REQUEST_COLLECTIONS_SUCCESS";
+export const REQUEST_COLLECTIONS_LOADING = "REQUEST_COLLECTIONS_LOADING";
+export const REQUEST_COLLECTIONS_ERROR = "REQUEST_COLLECTIONS_ERROR";
+
+export function requestCollections() {
+    return {
+        type: REQUEST_COLLECTIONS
+    };
+}
+
+export function requestCollectionsSuccess(collections) {
+    return {
+        type: REQUEST_COLLECTIONS_SUCCESS,
+        collections
+    };
+}
+
+export function requestCollectionsLoading(loading) {
+    return {
+        type: REQUEST_COLLECTIONS_LOADING,
+        loading
+    };
+}
+
+export function requestCollectionsError() {
+    return {
+        type: REQUEST_COLLECTIONS_ERROR
+    };
+}
+
+export function requestUserInfo() {
+    return {
+        type: REQUEST_USER_INFO
+    };
+}
+
+export function requestUserInfoSuccess(user) {
+    return {
+        type: REQUEST_USER_INFO_SUCCESS,
+        user
+    };
+}
+
+export function requestUserInfoLoading(loading) {
+    return {
+        type: REQUEST_USER_INFO_LOADING,
+        loading
+    };
+}
+
+export function requestUserInfoError() {
+    return {
+        type: REQUEST_USER_INFO_ERROR
+    };
+}
 
 export function requestLogout() {
     return {
