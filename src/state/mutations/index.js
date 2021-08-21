@@ -14,6 +14,63 @@ export const REQUEST_DICTIONARY_LOADING = "REQUEST_DICTIONARY_LOADING";
 export const REQUEST_DICTIONARY_ERROR = "REQUEST_DICTIONARY_ERROR";
 export const CHANGE_MESSAGE_VISIBILITY = "CHANGE_MESSAGE_VISIBILITY";
 export const CHANGE_MESSAGE_CONTENT = "CHANGE_MESSAGE_CONTENT";
+export const REQUEST_SIGNUP = "REQUEST_SIGNUP";
+export const REQUEST_LOGIN = "REQUEST_LOGIN";
+export const CHANGE_REDIRECT_STATUS = "CHANGE_REDIRECR_STATUS";
+export const CHANGE_LOGIN_STATUS = "CHANGE_LOGIN_STATUS";
+export const CHANGE_TOKEN = "CHANGE_TOKEN";
+export const UPDATE_WORD_COLLECTIONS = "UPDATE_WORD_COLLECTIONS";
+export const CHANGE_SIGNUP_LOADING = "CHANGE_SIGNUP_LOADING";
+export const CHANGE_LOGIN_LOADING = "CHANGE_LOGIN_LOADING";
+
+export function changeSignupLoading(loading) {
+    return {
+        type: CHANGE_SIGNUP_LOADING,
+        loading
+    };
+}
+
+export function changeLoginLoading(loading) {
+    return {
+        type: CHANGE_LOGIN_LOADING,
+        loading
+    }
+}
+
+export function changeRedirectStatus(redirect) {
+    return {
+        type: CHANGE_REDIRECT_STATUS,
+        redirect
+    };
+}
+
+export function changeLoggedInStatus(loggedIn) {
+    return {
+        type: CHANGE_LOGIN_STATUS,
+        loggedIn
+    };
+}
+
+export function changeToken(token) {
+    return {
+        type: CHANGE_TOKEN,
+        token
+    };
+}
+
+export function requestSignup(user) {
+    return {
+        type: REQUEST_SIGNUP,
+        user
+    };
+}
+
+export function requestUser(user) {
+    return {
+        type: REQUEST_LOGIN,
+        user
+    };
+}
 
 export function changeMessageVisibility(visible) {
     return {

@@ -7,7 +7,8 @@ export const theme = {
     secondaryColorLight: "#a8dadc",
     black: "#000",
     gray: "#eee",
-    white: "#fff"
+    white: "#fff",
+    dangerColor: "#e63946"
 };
 
 const sizes = {

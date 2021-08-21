@@ -1,4 +1,6 @@
+import { connect } from "react-redux";
 import styled from "styled-components";
+import { requestSignup } from "../../state/mutations";
 import { Form, FormButton, FormGroup, FormInput, FormLabel, FormSubtitle, FormTitle } from "../components/form";
 
 const Wrapper = styled.main`
@@ -13,39 +15,60 @@ const Wrapper = styled.main`
     justify-content: center;
 `;
 
-const SignUp = () => {
+const SignUp = ({ signup }) => {
+    function onFormSubmit(element) {
+        //Prevent redirection
+        element.preventDefault();
+
+        //Get form data
+        const formData = new FormData(element.target);
+
+        //Get the field from form
+        const user = {
+            username: formData.get("username"),
+            fullname: formData.get("fullname"),
+            password: formData.get("password"),
+            email: formData.get("email"),
+            city: formData.get("city"),
+            country: formData.get("country")
+        }
+
+        //Call request signup
+        signup(user);
+    }
+
     return (
         <Wrapper>
-            <Form>
+            <Form onSubmit={onFormSubmit}>
                 <FormTitle>Create an account</FormTitle>
                 <FormSubtitle>Create an account to save words and articles</FormSubtitle>
                 <FormGroup>
-                    <FormInput type="text" placeholder="Username" id="username"/>
+                    <FormInput type="text" placeholder="Username" id="username" name="username"/>
                     <FormLabel htmlFor="username">Username</FormLabel>
                 </FormGroup>
 
                 <FormGroup>
-                    <FormInput type="text" placeholder="Full name" id="fullname"/>
+                    <FormInput type="text" placeholder="Full name" id="fullname" name="fullname"/>
                     <FormLabel htmlFor="fullname">Full name</FormLabel>
                 </FormGroup>
 
                 <FormGroup>
-                    <FormInput type="email" placeholder="Email" id="email"/>
+                    <FormInput type="email" placeholder="Email" id="email" name="email"/>
                     <FormLabel htmlFor="email">Email</FormLabel>
                 </FormGroup>
 
                 <FormGroup>
-                    <FormInput type="password" placeholder="Password" id="password"/>
+                    <FormInput type="password" placeholder="Password" id="password" name="password"/>
                     <FormLabel htmlFor="password">Password</FormLabel>
                 </FormGroup>
 
                 <FormGroup>
-                    <FormInput type="text" placeholder="City" id="city"/>
+                    <FormInput type="text" placeholder="City" id="city" name="city"/>
                     <FormLabel htmlFor="city">City</FormLabel>
                 </FormGroup>
 
                 <FormGroup>
-                    <FormInput type="text" placeholder="Country" id="country"/>
+                    <FormInput type="text" placeholder="Country" name="country"/>
                     <FormLabel htmlFor="country">Country</FormLabel>
                 </FormGroup>
 
@@ -55,4 +78,18 @@ const SignUp = () => {
     )
 }
 
-export const ConnectedSignUp = SignUp;
+function mapStateToProps(state, ownProps) {
+    return {
+        redirect: state.authentication.register.redirect
+    };
+}
+
+function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        signup: function(user) {
+            dispatch(requestSignup(user));
+        }
+    };
+}
+
+export const ConnectedSignUp = connect(mapStateToProps, mapDispatchToProps)(SignUp);

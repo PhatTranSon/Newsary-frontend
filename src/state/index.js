@@ -27,6 +27,9 @@ const loggerMiddleware = createLogger();
 //Create redux store
 export const store = createStore(
     combineReducers({
+        authentication: function(authentication = defaultState.authentication, action) {
+            return authentication;
+        },
         message: function(message = defaultState.message, action) {
             let newState;
             switch(action.type) {
