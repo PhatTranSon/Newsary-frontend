@@ -11,7 +11,7 @@ import {
     requestSignup 
 } from "../../state/mutations/auth";
 import { Form, FormButton, FormGroup, FormInput, FormLabel, FormSubtitle, FormTitle } from "../components/form";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 const Wrapper = styled.main`
     width: 100%;
@@ -23,6 +23,21 @@ const Wrapper = styled.main`
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+
+const LoginMessage = styled.p`
+    color: ${props => props.theme.grayColorDark};
+    text-align: center;
+    margin-bottom: 1rem;
+
+    & a:link {
+        text-decoration: none;
+        color: ${props => props.theme.secondaryColor};
+    }
+
+    & a:visited {
+        color: ${props => props.theme.primaryColorDark};
+    }
 `;
 
 const SignUp = ({ 
@@ -109,6 +124,10 @@ const SignUp = ({
                                 value={country} onChange={updateCountry}/>
                             <FormLabel htmlFor="country">Country</FormLabel>
                         </FormGroup>
+
+                        <LoginMessage>
+                            Already have an account ? <Link to="/login">Login</Link>
+                        </LoginMessage>
 
                         <FormButton>Create account</FormButton>
                     </>

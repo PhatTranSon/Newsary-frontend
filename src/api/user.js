@@ -56,10 +56,17 @@ export function addWordToCollection(id, word, token) {
 }
 
 export function updateCollection(id, name, token) {
-    console.log(id, name, token);
     return axios.put(`${USER_URL}/collection/${id}`, {
         name
     }, {
+        params: {
+            "secret_token": token
+        }
+    }).then(response => response.data);
+}
+
+export function deleteWordFromCollection(collectionId, wordId, token) {
+    return axios.delete(`${USER_URL}/collection/${collectionId}/word/${wordId}`, {
         params: {
             "secret_token": token
         }

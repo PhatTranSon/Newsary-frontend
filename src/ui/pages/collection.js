@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import editIcon from "../../image/edit.svg";
 import { requestCollectionUpdate } from "../../state/mutations/collections";
+import { ConnectedWordCard, WordCards } from "../components/word";
 
 //Collection name and edit
 const CollectionNameForm = styled.form`
@@ -40,8 +41,11 @@ const CollectionNameEditButton = styled.button`
     }
 `;
 
-//Collection words
-
+const AddWordMessage = styled.p`
+    margin-top: 2rem;
+    color: ${props => props.theme.grayColorDark};
+    font-size: 1.5rem;
+`;
 
 const Collection = ({ collection, update }) => {
     const [name, setName] = useState(collection.name);
@@ -58,14 +62,28 @@ const Collection = ({ collection, update }) => {
     }
 
     return (
-        <CollectionNameForm onSubmit={onFormSubmit}>
-            <CollectionNameInput 
-                type="text" name="name" 
-                value={name} onChange={onNameChange}></CollectionNameInput>
-            <CollectionNameEditButton>
-                <img src={editIcon} alt="Edit icon"/>
-            </CollectionNameEditButton>
-        </CollectionNameForm>
+        <>
+            <CollectionNameForm onSubmit={onFormSubmit}>
+                <CollectionNameInput 
+                    type="text" name="name" 
+                    value={name} onChange={onNameChange}></CollectionNameInput>
+                <CollectionNameEditButton>
+                    <img src={editIcon} alt="Edit icon"/>
+                </CollectionNameEditButton>
+            </CollectionNameForm>
+
+            {
+                collection.words ?
+                <WordCards>
+                {
+                    collection.words.map(
+                        word => <ConnectedWordCard collectionId={collection._id} word={word}/>
+                    )
+                }
+                </WordCards> : 
+                <AddWordMessage>Add words to collection by reading news</AddWordMessage>
+            }
+        </>
     )
 }
 

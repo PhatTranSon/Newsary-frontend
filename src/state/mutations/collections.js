@@ -31,6 +31,26 @@ export const REQUEST_COLLECTION_ADD_WORD_SUCCESS = "REQUEST_COLLECTION_ADD_WORD_
 export const REQUEST_COLLECTION_UPDATE = "REQUEST_COLLECTION_UPDATE";
 export const REQUEST_COLLECTION_UPDATE_SUCCESS = "REQUEST_COLLECTION_UPDATE_SUCCESS";
 
+/* Remove word from collection */
+export const REQUEST_COLLECTION_REMOVE_WORD = "REQUEST_COLLECTION_REMOVE_WORD";
+export const REQUEST_COLLECTION_REMOVE_WORD_SUCCESS = "REQUEST_COLLECTION_REMOVE_WORD_SUCCESS";
+
+export function requestCollectionRemoveWord(collectionId, wordId) {
+    return {
+        type: REQUEST_COLLECTION_REMOVE_WORD,
+        collectionId,
+        wordId
+    };
+}
+
+export function requestCollectionRemoveWordSuccess(collectionId, wordId) {
+    return {
+        type: REQUEST_COLLECTION_REMOVE_WORD_SUCCESS,
+        collectionId,
+        wordId
+    };
+}
+
 export function requestCollectionUpdate(id, name) {
     return {
         type: REQUEST_COLLECTION_UPDATE,

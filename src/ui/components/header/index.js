@@ -12,6 +12,10 @@ const Nav = styled.nav`
     justify-content: space-between;
     padding: 0.75rem;
     border-bottom: 2px solid #eee;
+
+    & a {
+        text-decoration: none;
+    }
 `;
 
 const Header = ({ loggedIn, logout }) => {
@@ -25,7 +29,9 @@ const Header = ({ loggedIn, logout }) => {
     return (
         <>
             <Nav>
-                <Icon>Newsary</Icon>
+                <Link to="/">
+                    <Icon>Newsary</Icon>
+                </Link>
                 <ButtonGroup>
                     {
                         loggedIn ?

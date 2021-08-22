@@ -9,7 +9,7 @@ import {
 } from "redux-saga/effects";
 import { login, signup } from "../../api/auth";
 import { getNews } from "../../api/news";
-import { getUserInfo, getUserCollections, createWordCollection, deleteWordCollection, getWordsFromCollection, addWordToCollection, updateCollection } from "../../api/user";
+import { getUserInfo, getUserCollections, createWordCollection, deleteWordCollection, getWordsFromCollection, addWordToCollection, updateCollection, deleteWordFromCollection } from "../../api/user";
 import { getAllWordsDefinitions, getWordDefinition } from "../../api/word";
 import { 
     requestCollectionCreateLoading,
@@ -31,7 +31,9 @@ import {
     requestCollectionAddWordSuccess,
     REQUEST_COLLECTION_ADD_WORD,
     requestCollectionUpdateSuccess,
-    REQUEST_COLLECTION_UPDATE
+    REQUEST_COLLECTION_UPDATE,
+    requestCollectionRemoveWordSuccess,
+    REQUEST_COLLECTION_REMOVE_WORD
 } from "../mutations/collections";
 
 import {
@@ -314,6 +316,23 @@ function* fetchCollectionUpdate({ id, name }) {
     }
 }
 
+function* fetchCollectionRemoveWord({ collectionId, wordId }) {
+    //Get token
+    const state = yield select();
+    const { token } = state.authentication.login;
+
+    //Show message
+    yield showMessage("Deleting word");
+
+    try {
+        const _ = yield call(deleteWordFromCollection, collectionId, wordId, token);
+        yield put(requestCollectionRemoveWordSuccess(collectionId, wordId));
+        yield showMessage("Word deleted");
+    } catch(error) {
+        yield showMessage("Error encountered. Try again");
+    }
+}
+
 function* showMessage(message) {
     yield put(changeMessageVisibility(true));
     yield put(changeMessageContent(message));
@@ -331,4 +350,5 @@ export function* sagas() {
     yield takeEvery(REQUEST_COLLECTION_DELETE, fetchCollectionDelete);
     yield takeEvery(REQUEST_COLLECTION_ADD_WORD, fetchCollectionAdd);
     yield takeEvery(REQUEST_COLLECTION_UPDATE, fetchCollectionUpdate);
+    yield takeEvery(REQUEST_COLLECTION_REMOVE_WORD, fetchCollectionRemoveWord);
 }
