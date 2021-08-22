@@ -37,7 +37,10 @@ import {
     REQUEST_USER_INFO_LOADING,
     REQUEST_COLLECTIONS_SUCCESS,
     REQUEST_COLLECTIONS_ERROR,
-    REQUEST_COLLECTIONS_LOADING
+    REQUEST_COLLECTIONS_LOADING,
+    REQUEST_COLLECTION_CREATE_ERROR,
+    REQUEST_COLLECTION_CREATE_LOADING,
+    REQUEST_COLLECTION_CREATE_SUCCESS
 } from "./mutations";
 
 //Create saga middleware
@@ -51,6 +54,37 @@ export const store = createStore(
             let newState;
 
             switch(action.type) {
+                case REQUEST_COLLECTION_CREATE_ERROR:
+                    newState = {
+                        ...dashboard,
+                        createCollection: {
+                            ...dashboard.createCollection,
+                            error: true
+                        }
+                    };
+                    break;
+                case REQUEST_COLLECTION_CREATE_LOADING:
+                    newState = {
+                        ...dashboard,
+                        createCollection: {
+                            ...dashboard.createCollection,
+                            loading: action.loading
+                        }
+                    };
+                    break;
+                case REQUEST_COLLECTION_CREATE_SUCCESS:
+                    newState = {
+                        ...dashboard,
+                        wordCollections: {
+                            ...dashboard.wordCollections,
+                            content: [...dashboard.wordCollections.content, action.collection]
+                        },
+                        createCollection: {
+                            ...dashboard.createCollection,
+                            success: true
+                        }
+                    };
+                    break;
                 case REQUEST_COLLECTIONS_SUCCESS:
                     newState = {
                         ...dashboard,

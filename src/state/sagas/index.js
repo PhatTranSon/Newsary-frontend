@@ -6,9 +6,12 @@ import {
 } from "redux-saga/effects";
 import { login, signup } from "../../api/auth";
 import { getNews } from "../../api/news";
-import { getUserInfo, getUserCollections } from "../../api/user";
+import { getUserInfo, getUserCollections, createWordCollection } from "../../api/user";
 import { getWordDefinition } from "../../api/word";
 import { 
+    requestCollectionCreateLoading,
+    requestCollectionCreateError,
+    requestCollectionCreateSuccess,
     changeLoggedInStatus,
     changeLoginLoading, 
     changeMessageContent, 
@@ -32,6 +35,7 @@ import {
     requestUserInfoSuccess, 
     REQUEST_ARTICLES, 
     REQUEST_COLLECTIONS, 
+    REQUEST_COLLECTION_CREATE, 
     REQUEST_DICTIONARY, 
     REQUEST_LOGIN, 
     REQUEST_LOGOUT, 
@@ -176,6 +180,31 @@ function* fetchCollections() {
     }
 }
 
+function* fetchCollectionCreate({ collection }) {
+    //Get the token
+    const state = yield select();
+    const { token } = state.authentication.login;
+    const { name } = collection;
+
+    //Set loading
+    yield put(requestCollectionCreateLoading(true));
+
+    //Create collection
+    try {
+        //Get collection id and append to collection list
+        const { collectionid } = yield call(createWordCollection, name, token);
+        yield put(requestCollectionCreateSuccess({
+            name,
+            _id: collectionid
+        }));
+    } catch (error) {
+        yield showMessage("Error encountered. Try again");
+        yield put(requestCollectionCreateError());
+    } finally {
+        yield put(requestCollectionCreateLoading(false));
+    }
+}
+
 function* showMessage(message) {
     yield put(changeMessageVisibility(true));
     yield put(changeMessageContent(message));
@@ -189,4 +218,5 @@ export function* sagas() {
     yield takeEvery(REQUEST_LOGOUT, fetchLogout);
     yield takeEvery(REQUEST_USER_INFO, fetchUserInfo);
     yield takeEvery(REQUEST_COLLECTIONS, fetchCollections);
+    yield takeEvery(REQUEST_COLLECTION_CREATE, fetchCollectionCreate);
 }

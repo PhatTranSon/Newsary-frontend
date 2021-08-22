@@ -17,3 +17,14 @@ export function getUserCollections(token) {
         }
     }).then(response => response.data);
 }
+
+export function createWordCollection(name, token) {
+    return axios.post(`${USER_URL}/collection`, {
+        name: name,
+        type: "word"
+    }, {
+        params: {
+            "secret_token": token
+        }
+    }).then(response => response.data);
+}

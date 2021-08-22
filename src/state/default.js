@@ -23,6 +23,11 @@ export const defaultState = {
             loading: false,
             error: false,
             content: []
+        },
+        createCollection: {
+            success: false,
+            loading: false,
+            error: false
         }
     },
     user: {
