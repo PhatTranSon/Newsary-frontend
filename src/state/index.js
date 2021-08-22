@@ -40,7 +40,10 @@ import {
     REQUEST_COLLECTIONS_LOADING,
     REQUEST_COLLECTION_CREATE_ERROR,
     REQUEST_COLLECTION_CREATE_LOADING,
-    REQUEST_COLLECTION_CREATE_SUCCESS
+    REQUEST_COLLECTION_CREATE_SUCCESS,
+    REQUEST_COLLECTION_DELETE_ERROR,
+    REQUEST_COLLECTION_DELETE_LOADING,
+    REQUEST_COLLECTION_DELETE_SUCCESS
 } from "./mutations";
 
 //Create saga middleware
@@ -54,6 +57,37 @@ export const store = createStore(
             let newState;
 
             switch(action.type) {
+                case REQUEST_COLLECTION_DELETE_ERROR:
+                    newState = {
+                        ...dashboard,
+                        deleteCollection: {
+                            ...dashboard.deleteCollection,
+                            error: true
+                        }
+                    };
+                    break;
+                case REQUEST_COLLECTION_DELETE_LOADING:
+                    newState = {
+                        ...dashboard,
+                        deleteCollection: {
+                            ...dashboard.deleteCollection,
+                            loading: action.loading
+                        }
+                    };
+                    break;
+                case REQUEST_COLLECTION_DELETE_SUCCESS:
+                    newState = {
+                        ...dashboard,
+                        wordCollections: {
+                            ...dashboard.wordCollections,
+                            content: dashboard.wordCollections.content.filter(item => item._id !== action.collection._id)
+                        },
+                        deleteCollection: {
+                            ...dashboard.deleteCollection,
+                            success: true
+                        }
+                    };
+                    break;
                 case REQUEST_COLLECTION_CREATE_ERROR:
                     newState = {
                         ...dashboard,

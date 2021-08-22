@@ -70,6 +70,39 @@ export const REQUEST_COLLECTION_CREATE_SUCCESS = "REQUEST_COLLECTION_CREATE_SUCC
 export const REQUEST_COLLECTION_CREATE_ERROR = "REQUEST_COLLECTION_CREATE_ERROR";
 export const REQUEST_COLLECTION_CREATE_LOADING = "REQUEST_COLLECTION_CREATE_LOADING";
 
+/* Collection deletetion mutation */
+export const REQUEST_COLLECTION_DELETE = "REQUEST_COLLECTION_DELETE";
+export const REQUEST_COLLECTION_DELETE_SUCCESS = "REQUEST_COLLECTION_DELETE_SUCCESS";
+export const REQUEST_COLLECTION_DELETE_ERROR = "REQUEST_COLLECTION_DELETE_ERROR";
+export const REQUEST_COLLECTION_DELETE_LOADING = "REQUEST_COLLECTION_DELETE_LOADING";
+
+export function requestCollectionDelete(collection) {
+    return {
+        type: REQUEST_COLLECTION_DELETE,
+        collection
+    };
+}
+
+export function requestCollectionDeleteError() {
+    return {
+        type: REQUEST_COLLECTION_DELETE_ERROR
+    };
+}
+
+export function requestCollectionDeleteLoading(loading) {
+    return {
+        type: REQUEST_COLLECTION_DELETE_LOADING,
+        loading
+    };
+}
+
+export function requestCollectionDeleteSuccess(collection) {
+    return {
+        type: REQUEST_COLLECTION_DELETE_SUCCESS,
+        collection
+    };
+}
+
 export function requestCollectionCreate(collection) {
     return {
         type: REQUEST_COLLECTION_CREATE,

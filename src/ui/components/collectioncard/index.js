@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { DeleteIcon } from "../icon/delete";
 import { theme } from "../../styling/theme";
 import { useState } from "react";
+import { requestCollectionDelete } from "../../../state/mutations";
+import { connect } from "react-redux";
 
 export const CollectionCards = styled.div`
     display: flex;
@@ -57,8 +59,12 @@ const IconGroup = styled.div`
     top: 1rem;
 `;
 
-const CollectionCard = ({ collection }) => {
+const CollectionCard = ({ collection, deleteCollection }) => {
     const [isHovered, setIsHovered] = useState(false);
+
+    function onDeleteClick() {
+        deleteCollection(collection);
+    }
 
     return (
         <CollectionCardWrapper
@@ -66,10 +72,20 @@ const CollectionCard = ({ collection }) => {
             onMouseLeave={() => setIsHovered(false)}>
             <CollectionCardText>{ collection.name }</CollectionCardText>
             <IconGroup>
-                <DeleteIcon size="27px" fill={isHovered ? theme.white : theme.grayColorLighter}/>
+                <DeleteIcon 
+                    size="27px" fill={isHovered ? theme.white : theme.grayColorLighter}
+                    onClick={onDeleteClick}/>
             </IconGroup>
         </CollectionCardWrapper>
     );
 }
 
-export const ConnectedCollectionCard = CollectionCard;
+function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        deleteCollection: function(collection) {
+            dispatch(requestCollectionDelete(collection));
+        }
+    }
+}
+
+export const ConnectedCollectionCard = connect(null, mapDispatchToProps)(CollectionCard);

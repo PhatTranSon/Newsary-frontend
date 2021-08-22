@@ -6,7 +6,7 @@ import {
 } from "redux-saga/effects";
 import { login, signup } from "../../api/auth";
 import { getNews } from "../../api/news";
-import { getUserInfo, getUserCollections, createWordCollection } from "../../api/user";
+import { getUserInfo, getUserCollections, createWordCollection, deleteWordCollection } from "../../api/user";
 import { getWordDefinition } from "../../api/word";
 import { 
     requestCollectionCreateLoading,
@@ -40,7 +40,11 @@ import {
     REQUEST_LOGIN, 
     REQUEST_LOGOUT, 
     REQUEST_SIGNUP, 
-    REQUEST_USER_INFO
+    REQUEST_USER_INFO,
+    requestCollectionDeleteError,
+    requestCollectionDeleteLoading,
+    requestCollectionDeleteSuccess,
+    REQUEST_COLLECTION_DELETE
 } from "../mutations";
 
 
@@ -205,6 +209,28 @@ function* fetchCollectionCreate({ collection }) {
     }
 }
 
+function* fetchCollectionDelete({ collection }) {
+    //Get the token
+    const state = yield select();
+    const { token } = state.authentication.login;
+    const { _id } = collection;
+
+    //Delete collection
+    yield put(requestCollectionDeleteLoading(true));
+    yield showMessage("Deleting");
+
+    try {
+        const _ = yield call(deleteWordCollection, _id, token);
+        yield showMessage("Collection deleted");
+        yield put(requestCollectionDeleteSuccess(collection));
+    } catch(error) {
+        yield showMessage("Error encountered. Try again");
+        yield put(requestCollectionDeleteError());
+    } finally {
+        yield put(requestCollectionDeleteLoading(false));
+    }
+}
+
 function* showMessage(message) {
     yield put(changeMessageVisibility(true));
     yield put(changeMessageContent(message));
@@ -219,4 +245,5 @@ export function* sagas() {
     yield takeEvery(REQUEST_USER_INFO, fetchUserInfo);
     yield takeEvery(REQUEST_COLLECTIONS, fetchCollections);
     yield takeEvery(REQUEST_COLLECTION_CREATE, fetchCollectionCreate);
+    yield takeEvery(REQUEST_COLLECTION_DELETE, fetchCollectionDelete);
 }

@@ -28,6 +28,10 @@ export const defaultState = {
             success: false,
             loading: false,
             error: false
+        },
+        deleteCollection: {
+            loading: false,
+            error: false
         }
     },
     user: {

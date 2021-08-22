@@ -28,3 +28,11 @@ export function createWordCollection(name, token) {
         }
     }).then(response => response.data);
 }
+
+export function deleteWordCollection(id, token) {
+    return axios.delete(`${USER_URL}/collection/${id}`, {
+        params: {
+            "secret_token": token
+        }
+    }).then(response => response.data);
+}
