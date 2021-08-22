@@ -47,3 +47,9 @@ export function getWordDefinition(word) {
         .then(response => response.data)
         .then(data => formatData(data));
 }
+
+export function getAllWordsDefinitions(words) {
+    return Promise.all(
+        words.map(word => getWordDefinition(word))
+    );
+}

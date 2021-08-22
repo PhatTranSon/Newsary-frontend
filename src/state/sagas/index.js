@@ -3,12 +3,13 @@ import {
     put,
     select,
     call,
-    all
+    all,
+    fork
 } from "redux-saga/effects";
 import { login, signup } from "../../api/auth";
 import { getNews } from "../../api/news";
 import { getUserInfo, getUserCollections, createWordCollection, deleteWordCollection, getWordsFromCollection } from "../../api/user";
-import { getWordDefinition } from "../../api/word";
+import { getAllWordsDefinitions, getWordDefinition } from "../../api/word";
 import { 
     requestCollectionCreateLoading,
     requestCollectionCreateError,
@@ -22,7 +23,10 @@ import {
     requestCollectionDeleteSuccess,
     REQUEST_COLLECTIONS, 
     REQUEST_COLLECTION_CREATE, 
-    REQUEST_COLLECTION_DELETE
+    REQUEST_COLLECTION_DELETE,
+    requestCollectionContentLoading,
+    requestCollectionContentError,
+    requestCollectionContentSuccess
 } from "../mutations/collections";
 
 import {
@@ -194,11 +198,34 @@ function* fetchCollections() {
     try {
         const { word_collections } = yield call(getUserCollections, token);
         yield put(requestCollectionsSuccess(word_collections));
+        yield fetchAllCollectionContent(word_collections);
     } catch (error) {
         yield put(requestCollectionsError());
     } finally {
         yield put(requestCollectionsLoading(false));
     }
+}
+
+function* fetchAllCollectionContent(collections) {
+    //Get ids
+    const ids = collections.map(collection => collection._id);
+    //Yield all
+    yield all(ids.map(id => fork(fetchCollectionContent, id)));
+}
+
+function* fetchCollectionContent(id) {
+    //Get the token
+    const state = yield select();
+    const { token } = state.authentication.login;
+
+    //Set loading
+    yield put(requestCollectionContentLoading(id, true));
+
+    //Fetch collection words and 
+    const { allWords } = yield call(getWordsFromCollection, id, token);
+    const words = allWords.map(word => word.value);
+    const wordsWithDefinition = yield call(getAllWordsDefinitions, words);
+    yield put(requestCollectionContentSuccess(id, wordsWithDefinition));
 }
 
 function* fetchCollectionCreate({ collection }) {

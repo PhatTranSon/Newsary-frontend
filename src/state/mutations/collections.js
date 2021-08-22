@@ -17,6 +17,42 @@ export const REQUEST_COLLECTION_DELETE_SUCCESS = "REQUEST_COLLECTION_DELETE_SUCC
 export const REQUEST_COLLECTION_DELETE_ERROR = "REQUEST_COLLECTION_DELETE_ERROR";
 export const REQUEST_COLLECTION_DELETE_LOADING = "REQUEST_COLLECTION_DELETE_LOADING";
 
+/* Collection fetch word mutation */
+export const REQUEST_COLLECTION_CONTENT = "REQUEST_COLLECTION_CONTENT";
+export const REQUEST_COLLECTION_CONTENT_SUCCESS = "REQUEST_COLLECTION_CONTENT_SUCCESS";
+export const REQUEST_COLLECTION_CONTENT_LOADING = "REQUEST_COLLECTION_CONTENT_LOADING";
+export const REQUEST_COLLECTION_CONTENT_ERROR = "REQUEST_COLLECTION_CONTENT_ERROR";
+
+export function requestCollectionContent(id) {
+    return {
+        type: REQUEST_COLLECTION_CONTENT,
+        id
+    };
+}
+
+export function requestCollectionContentError(id) {
+    return {
+        type: REQUEST_COLLECTIONS_ERROR,
+        id
+    }
+}
+
+export function requestCollectionContentLoading(id, loading) {
+    return {
+        type: REQUEST_COLLECTION_CONTENT_LOADING,
+        id,
+        loading
+    };
+}
+
+export function requestCollectionContentSuccess(id, words) {
+    return {
+        type: REQUEST_COLLECTION_CONTENT_SUCCESS,
+        id,
+        words
+    }
+}
+
 export function requestCollectionDelete(collection) {
     return {
         type: REQUEST_COLLECTION_DELETE,

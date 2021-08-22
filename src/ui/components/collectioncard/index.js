@@ -13,7 +13,8 @@ export const CollectionCards = styled.div`
 
 const CollectionCardWrapper = styled.div`
     background-color: white;
-    flex: 0 0 30%;
+    margin-right: 2rem;
+    flex: 1 0 30%;
     height: 40vh;
     box-shadow .6rem .6rem 0 ${props => props.theme.primaryColorDark};
     margin-bottom: 2rem;

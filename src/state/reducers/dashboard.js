@@ -9,13 +9,40 @@ import {
     REQUEST_COLLECTION_CREATE_SUCCESS,
     REQUEST_COLLECTION_DELETE_ERROR,
     REQUEST_COLLECTION_DELETE_LOADING,
-    REQUEST_COLLECTION_DELETE_SUCCESS
+    REQUEST_COLLECTION_DELETE_SUCCESS,
+    REQUEST_COLLECTION_CONTENT_SUCCESS
 } from "../mutations/collections";
+
+function appendWordsToCollection(collections, id, words) {
+    return collections.map(collection => {
+        if (collection._id === id) {
+            return {
+                ...collection,
+                words
+            }
+        } else {
+            return collection;
+        }
+    })
+}
 
 export function dashboardReducer(dashboard = defaultState.dashboard, action) {
     let newState;
 
     switch(action.type) {
+        case REQUEST_COLLECTION_CONTENT_SUCCESS:
+            newState = {
+                ...dashboard,
+                wordCollections: {
+                    ...dashboard.wordCollections,
+                    content: appendWordsToCollection(
+                        dashboard.wordCollections.content, 
+                        action.id,
+                        action.words
+                    )
+                },
+            };
+            break;
         case REQUEST_COLLECTION_DELETE_ERROR:
             newState = {
                 ...dashboard,
