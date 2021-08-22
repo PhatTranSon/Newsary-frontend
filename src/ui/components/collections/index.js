@@ -5,10 +5,11 @@ import { Button } from "../button";
 import { ErrorMessage } from "../error";
 import emptyIcon from "../../../image/empty.svg";
 import { Link, useRouteMatch } from "react-router-dom";
+import { CollectionCards, ConnectedCollectionCard } from "../collectioncard";
 
 const CollectionTitle = styled.div`
-    color: ${props => props.theme.primaryColor};
-    margin-bottom: 0.5rem;
+    color: ${props => props.theme.grayColorDark};
+    margin: 2rem 0;
     display: flex;
     justify-content: space-between;
 
@@ -64,8 +65,11 @@ const WordCollections = ({
                 </CollectionTitle>
                 {
                     collections.length > 0 ?
-                    <>
-                    </> :
+                    <CollectionCards>
+                    {
+                        collections.map(collection => <ConnectedCollectionCard collection={collection}/>)
+                    }
+                    </CollectionCards> :
                     <NoCollections />
                 }
             </>

@@ -6,7 +6,7 @@ import { Loading } from "../components/loading";
 import { useState } from "react";
 import { requestCollectionCreate } from "../../state/mutations";
 import { connect } from "react-redux";
-import { Redirect, useRouteMatch } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const Title = styled.h1`
     font-size: 1.5rem;

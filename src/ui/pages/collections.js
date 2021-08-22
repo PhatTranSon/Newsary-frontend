@@ -9,9 +9,9 @@ export const Collections = () => {
                 <ConnectedWelcomeUser />
             </CardWrapper>
 
-            <CardWrapper>   
+            <>   
                 <ConnectedCollections />
-            </CardWrapper>
+            </>
         </>
     );
 }
