@@ -4,7 +4,7 @@ import { FormGroup, FormInput, FormLabel } from "../components/form";
 import { Button } from "../components/button";
 import { Loading } from "../components/loading";
 import { useState } from "react";
-import { requestCollectionCreate } from "../../state/mutations";
+import { requestCollectionCreate } from "../../state/mutations/collections";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 

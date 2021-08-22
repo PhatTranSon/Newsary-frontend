@@ -67,7 +67,7 @@ const WordCollections = ({
                     collections.length > 0 ?
                     <CollectionCards>
                     {
-                        collections.map(collection => <ConnectedCollectionCard collection={collection}/>)
+                        collections.map((collection,index) => <ConnectedCollectionCard key={index} collection={collection}/>)
                     }
                     </CollectionCards> :
                     <NoCollections />

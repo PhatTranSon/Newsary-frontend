@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { DeleteIcon } from "../icon/delete";
 import { theme } from "../../styling/theme";
 import { useState } from "react";
-import { requestCollectionDelete } from "../../../state/mutations";
+import { requestCollectionDelete } from "../../../state/mutations/collections";
 import { connect } from "react-redux";
 
 export const CollectionCards = styled.div`
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 `;
 
 const CollectionCardWrapper = styled.div`
