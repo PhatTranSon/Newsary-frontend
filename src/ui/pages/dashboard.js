@@ -7,6 +7,7 @@ import {
 import styled from "styled-components";
 import bookImage from "../../image/book.svg";
 import quizImage from "../../image/quiz.svg";
+import { ConnectedCollection } from "./collection";
 import { Collections } from "./collections";
 import { ConnectedCreateCollection } from "./createcollections";
 import { ConnectedQuiz } from "./quiz";
@@ -97,6 +98,9 @@ const DashBoard = () => {
                     <Route path={`${url}/createcollection`}>
                         <ConnectedCreateCollection />
                     </Route>
+
+                    <Route path={`${url}/collections/:collectionId`}
+                        component={ConnectedCollection}/>
                 </Switch>
             </Main>
         </GridWrapper>

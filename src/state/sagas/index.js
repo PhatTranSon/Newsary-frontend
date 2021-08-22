@@ -9,7 +9,7 @@ import {
 } from "redux-saga/effects";
 import { login, signup } from "../../api/auth";
 import { getNews } from "../../api/news";
-import { getUserInfo, getUserCollections, createWordCollection, deleteWordCollection, getWordsFromCollection, addWordToCollection } from "../../api/user";
+import { getUserInfo, getUserCollections, createWordCollection, deleteWordCollection, getWordsFromCollection, addWordToCollection, updateCollection } from "../../api/user";
 import { getAllWordsDefinitions, getWordDefinition } from "../../api/word";
 import { 
     requestCollectionCreateLoading,
@@ -29,7 +29,9 @@ import {
     requestCollectionContentError,
     requestCollectionContentSuccess,
     requestCollectionAddWordSuccess,
-    REQUEST_COLLECTION_ADD_WORD
+    REQUEST_COLLECTION_ADD_WORD,
+    requestCollectionUpdateSuccess,
+    REQUEST_COLLECTION_UPDATE
 } from "../mutations/collections";
 
 import {
@@ -295,6 +297,23 @@ function* fetchCollectionAdd({ id, word }) {
     }
 }
 
+function* fetchCollectionUpdate({ id, name }) {
+    //Get token
+    const state = yield select();
+    const { token } = state.authentication.login;
+
+    //Show message
+    yield showMessage("Updating word collection");
+
+    try {
+        const _ = yield call(updateCollection, id, name, token);
+        yield put(requestCollectionUpdateSuccess(id, name));
+        yield showMessage("Collection updated");
+    } catch(error) {
+        yield showMessage("Error encountered. Try again");
+    }
+}
+
 function* showMessage(message) {
     yield put(changeMessageVisibility(true));
     yield put(changeMessageContent(message));
@@ -311,4 +330,5 @@ export function* sagas() {
     yield takeEvery(REQUEST_COLLECTION_CREATE, fetchCollectionCreate);
     yield takeEvery(REQUEST_COLLECTION_DELETE, fetchCollectionDelete);
     yield takeEvery(REQUEST_COLLECTION_ADD_WORD, fetchCollectionAdd);
+    yield takeEvery(REQUEST_COLLECTION_UPDATE, fetchCollectionUpdate);
 }

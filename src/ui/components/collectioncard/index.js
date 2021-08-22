@@ -4,6 +4,8 @@ import { theme } from "../../styling/theme";
 import { useState } from "react";
 import { requestCollectionDelete } from "../../../state/mutations/collections";
 import { connect } from "react-redux";
+import { Link, useRouteMatch } from "react-router-dom";
+import { Button } from "../button";
 
 export const CollectionCards = styled.div`
     display: flex;
@@ -27,11 +29,11 @@ const CollectionCardWrapper = styled.div`
         transform: scale(1.05) translateY(-0.5rem);
         box-shadow: none;
 
-        & h2 {
+        & p {
             color: ${props => props.theme.white};
         }
 
-        & h2::after {
+        & p::after {
             background-color: ${props => props.theme.white};
         }
     }
@@ -45,7 +47,11 @@ const CollectionCardText = styled.h2`
     color: ${props => props.theme.primaryColorDark};
     padding-bottom: 0.5rem;
 
-    &::after {
+    & p {
+        margin-bottom: 1rem;
+    }
+
+    & p::after {
         width: 3rem;
         height: 2px;
         background-color: ${props => props.theme.primaryColorDark};
@@ -61,6 +67,7 @@ const IconGroup = styled.div`
 `;
 
 const CollectionCard = ({ collection, deleteCollection }) => {
+    const { url } = useRouteMatch();
     const [isHovered, setIsHovered] = useState(false);
 
     function onDeleteClick() {
@@ -71,12 +78,17 @@ const CollectionCard = ({ collection, deleteCollection }) => {
         <CollectionCardWrapper
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}>
-            <CollectionCardText>{ collection.name }</CollectionCardText>
-            <IconGroup>
-                <DeleteIcon 
-                    size="27px" fill={isHovered ? theme.white : theme.grayColorLighter}
-                    onClick={onDeleteClick}/>
-            </IconGroup>
+                <CollectionCardText>
+                    <p>{ collection.name }</p>
+                    <Link to={`${url}/collections/${collection._id}`}>
+                        <Button inverted>View</Button>
+                    </Link>
+                </CollectionCardText>
+                <IconGroup>
+                    <DeleteIcon 
+                        size="27px" fill={isHovered ? theme.white : theme.grayColorLighter}
+                        onClick={onDeleteClick}/>
+                </IconGroup>
         </CollectionCardWrapper>
     );
 }

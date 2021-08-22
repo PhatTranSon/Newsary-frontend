@@ -14,7 +14,7 @@ export const Button = styled.button`
     width: ${props => props.w || "auto"};
 
     &:hover {
-        background-color: ${props => (props.inverted ? props.theme.grayColorDark : props.theme.primaryColorDark)};
+        background-color: ${props => (props.inverted ? props.theme.grayColorLight : props.theme.primaryColorDark)};
     }
 `;
 

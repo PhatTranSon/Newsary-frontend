@@ -27,6 +27,26 @@ export const REQUEST_COLLECTION_CONTENT_ERROR = "REQUEST_COLLECTION_CONTENT_ERRO
 export const REQUEST_COLLECTION_ADD_WORD = "REQUEST_COLLECTION_ADD_WORD";
 export const REQUEST_COLLECTION_ADD_WORD_SUCCESS = "REQUEST_COLLECTION_ADD_WORD_SUCCESS";
 
+/* Update collection */
+export const REQUEST_COLLECTION_UPDATE = "REQUEST_COLLECTION_UPDATE";
+export const REQUEST_COLLECTION_UPDATE_SUCCESS = "REQUEST_COLLECTION_UPDATE_SUCCESS";
+
+export function requestCollectionUpdate(id, name) {
+    return {
+        type: REQUEST_COLLECTION_UPDATE,
+        id,
+        name
+    };
+}
+
+export function requestCollectionUpdateSuccess(id, name) {
+    return {
+        type: REQUEST_COLLECTION_UPDATE_SUCCESS,
+        id,
+        name
+    };
+}
+
 export function requestCollectionAdd(id, word) {
     return {
         type: REQUEST_COLLECTION_ADD_WORD,

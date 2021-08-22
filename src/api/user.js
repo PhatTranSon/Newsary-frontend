@@ -54,3 +54,14 @@ export function addWordToCollection(id, word, token) {
         }
     }).then(response => response.data);
 }
+
+export function updateCollection(id, name, token) {
+    console.log(id, name, token);
+    return axios.put(`${USER_URL}/collection/${id}`, {
+        name
+    }, {
+        params: {
+            "secret_token": token
+        }
+    }).then(response => response.data);
+}
