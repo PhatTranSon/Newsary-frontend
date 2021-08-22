@@ -23,6 +23,26 @@ export const REQUEST_COLLECTION_CONTENT_SUCCESS = "REQUEST_COLLECTION_CONTENT_SU
 export const REQUEST_COLLECTION_CONTENT_LOADING = "REQUEST_COLLECTION_CONTENT_LOADING";
 export const REQUEST_COLLECTION_CONTENT_ERROR = "REQUEST_COLLECTION_CONTENT_ERROR";
 
+/* Add word to collection */
+export const REQUEST_COLLECTION_ADD_WORD = "REQUEST_COLLECTION_ADD_WORD";
+export const REQUEST_COLLECTION_ADD_WORD_SUCCESS = "REQUEST_COLLECTION_ADD_WORD_SUCCESS";
+
+export function requestCollectionAdd(id, word) {
+    return {
+        type: REQUEST_COLLECTION_ADD_WORD,
+        id,
+        word
+    };
+}
+
+export function requestCollectionAddWordSuccess(id, word) {
+    return {
+        type: REQUEST_COLLECTION_ADD_WORD_SUCCESS,
+        id,
+        word
+    };
+}
+
 export function requestCollectionContent(id) {
     return {
         type: REQUEST_COLLECTION_CONTENT,

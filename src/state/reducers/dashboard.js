@@ -10,7 +10,8 @@ import {
     REQUEST_COLLECTION_DELETE_ERROR,
     REQUEST_COLLECTION_DELETE_LOADING,
     REQUEST_COLLECTION_DELETE_SUCCESS,
-    REQUEST_COLLECTION_CONTENT_SUCCESS
+    REQUEST_COLLECTION_CONTENT_SUCCESS,
+    REQUEST_COLLECTION_ADD_WORD_SUCCESS
 } from "../mutations/collections";
 
 function appendWordsToCollection(collections, id, words) {
@@ -23,13 +24,39 @@ function appendWordsToCollection(collections, id, words) {
         } else {
             return collection;
         }
-    })
+    });
+}
+
+function appendWordToCollection(collections, id, word) {
+    return collections.map(collection => {
+        if (collection._id === id) {
+            return {
+                ...collection,
+                words: [...collection.words, word]
+            };
+        } else {
+            return collection;
+        }
+    });
 }
 
 export function dashboardReducer(dashboard = defaultState.dashboard, action) {
     let newState;
 
     switch(action.type) {
+        case REQUEST_COLLECTION_ADD_WORD_SUCCESS:
+            newState = {
+                ...dashboard,
+                wordCollections: {
+                    ...dashboard.wordCollections,
+                    content: appendWordToCollection(
+                        dashboard.wordCollections.content, 
+                        action.id,
+                        action.word
+                    )
+                },
+            };
+            break;
         case REQUEST_COLLECTION_CONTENT_SUCCESS:
             newState = {
                 ...dashboard,

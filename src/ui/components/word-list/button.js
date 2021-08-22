@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import menuImage from "../../../image/menu.svg";
-import { toggleWordListVisibility } from "../../../state/mutations";
+import { toggleWordListVisibility } from "../../../state/mutations/ui";
 import { connect } from "react-redux";
 
 const Wrapper = styled.button`

@@ -4,11 +4,12 @@ import {
     select,
     call,
     all,
-    fork
+    fork,
+    delay
 } from "redux-saga/effects";
 import { login, signup } from "../../api/auth";
 import { getNews } from "../../api/news";
-import { getUserInfo, getUserCollections, createWordCollection, deleteWordCollection, getWordsFromCollection } from "../../api/user";
+import { getUserInfo, getUserCollections, createWordCollection, deleteWordCollection, getWordsFromCollection, addWordToCollection } from "../../api/user";
 import { getAllWordsDefinitions, getWordDefinition } from "../../api/word";
 import { 
     requestCollectionCreateLoading,
@@ -26,7 +27,9 @@ import {
     REQUEST_COLLECTION_DELETE,
     requestCollectionContentLoading,
     requestCollectionContentError,
-    requestCollectionContentSuccess
+    requestCollectionContentSuccess,
+    requestCollectionAddWordSuccess,
+    REQUEST_COLLECTION_ADD_WORD
 } from "../mutations/collections";
 
 import {
@@ -223,8 +226,7 @@ function* fetchCollectionContent(id) {
 
     //Fetch collection words and 
     const { allWords } = yield call(getWordsFromCollection, id, token);
-    const words = allWords.map(word => word.value);
-    const wordsWithDefinition = yield call(getAllWordsDefinitions, words);
+    const wordsWithDefinition = yield call(getAllWordsDefinitions, allWords);
     yield put(requestCollectionContentSuccess(id, wordsWithDefinition));
 }
 
@@ -275,6 +277,24 @@ function* fetchCollectionDelete({ collection }) {
     }
 }
 
+function* fetchCollectionAdd({ id, word }) {
+    //Get token
+    const state = yield select();
+    const { token } = state.authentication.login;
+
+    //Show message
+    yield showMessage("Adding word collection");
+
+    //Call add word
+    try {
+        const { _id } = yield call(addWordToCollection, id, word.word, token);
+        yield put(requestCollectionAddWordSuccess(id, { ...word, _id }));
+        yield showMessage("Word added to collection");
+    } catch(error) {
+        yield showMessage("Error encountered, Try again");
+    }
+}
+
 function* showMessage(message) {
     yield put(changeMessageVisibility(true));
     yield put(changeMessageContent(message));
@@ -290,4 +310,5 @@ export function* sagas() {
     yield takeEvery(REQUEST_COLLECTIONS, fetchCollections);
     yield takeEvery(REQUEST_COLLECTION_CREATE, fetchCollectionCreate);
     yield takeEvery(REQUEST_COLLECTION_DELETE, fetchCollectionDelete);
+    yield takeEvery(REQUEST_COLLECTION_ADD_WORD, fetchCollectionAdd);
 }

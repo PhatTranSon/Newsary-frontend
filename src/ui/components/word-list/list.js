@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { Loading } from "../loading";
 import { useOutsideClick } from "../../../hooks/ui";
 import { toggleWordListVisibility } from "../../../state/mutations/ui";
+import { requestCollectionAdd } from "../../../state/mutations/collections";
 import { useRef } from "react";
 import { breakpoints } from "../../styling/theme";
 import { EmptyList } from "./empty";
+import { ConnectedCard } from "./card";
 
 const Wrapper = styled.div`
     width: 25vw;
@@ -31,36 +33,6 @@ const Cards = styled.ul`
     flex-flow: column-reverse nowrap;
 `;
 
-const CardWrapper = styled.li`
-    border-bottom: 2px dashed ${props => props.theme.gray};
-
-    & h3 {
-        color: ${props => props.theme.primaryColor};
-        margin: 0.25rem 0;
-        font-weight: 300;
-        font-size: 1.5rem;
-    }
-
-    & p {
-        font-weight: 300;
-        margin-bottom: 1rem;
-    }
-`;
-
-const Card = ({ word }) => {
-    return (
-        <CardWrapper>
-            <h3>{ word.word }</h3>
-            <h4>Phonetic</h4>
-            <p>{ word.phonetic }</p>
-            <h4>Meaning</h4>
-            <p>{ word.meaning }</p>
-            <h4>Example</h4>
-            <p>{ word.example }</p>
-        </CardWrapper>
-    )
-}
-
 const List = ({ loading, visible, words, hideList }) => {
     //Outside click
     const ref = useRef(null);
@@ -77,7 +49,7 @@ const List = ({ loading, visible, words, hideList }) => {
                 <EmptyList /> :
                 <Cards>
                 {
-                    words.map((word, index) => <Card key={index} word={word}/>)
+                    words.map((word, index) => <ConnectedCard key={index} word={word}/>)
                 }
                 </Cards>
             }

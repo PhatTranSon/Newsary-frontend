@@ -44,3 +44,13 @@ export function getWordsFromCollection(id, token) {
         }
     }).then(response => response.data);
 }
+
+export function addWordToCollection(id, word, token) {
+    return axios.post(`${USER_URL}/collection/${id}/word`, {
+        value: word
+    }, {
+        params: {
+            "secret_token": token
+        }
+    }).then(response => response.data);
+}

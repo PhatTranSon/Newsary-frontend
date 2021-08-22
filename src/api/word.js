@@ -50,6 +50,14 @@ export function getWordDefinition(word) {
 
 export function getAllWordsDefinitions(words) {
     return Promise.all(
-        words.map(word => getWordDefinition(word))
+        words.map(word => { 
+            return getWordDefinition(word.value)
+                    .then(definition => {
+                        return {
+                            ...definition,
+                            _id: word._id
+                        };
+                    });
+        })
     );
 }
