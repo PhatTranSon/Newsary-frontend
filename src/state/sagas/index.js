@@ -2,50 +2,67 @@ import {
     takeEvery,
     put,
     select,
-    call
+    call,
+    all
 } from "redux-saga/effects";
 import { login, signup } from "../../api/auth";
 import { getNews } from "../../api/news";
-import { getUserInfo, getUserCollections, createWordCollection, deleteWordCollection } from "../../api/user";
+import { getUserInfo, getUserCollections, createWordCollection, deleteWordCollection, getWordsFromCollection } from "../../api/user";
 import { getWordDefinition } from "../../api/word";
 import { 
     requestCollectionCreateLoading,
     requestCollectionCreateError,
     requestCollectionCreateSuccess,
+    requestCollections, 
+    requestCollectionsSuccess,
+    requestCollectionsError, 
+    requestCollectionsLoading,
+    requestCollectionDeleteError,
+    requestCollectionDeleteLoading,
+    requestCollectionDeleteSuccess,
+    REQUEST_COLLECTIONS, 
+    REQUEST_COLLECTION_CREATE, 
+    REQUEST_COLLECTION_DELETE
+} from "../mutations/collections";
+
+import {
     changeLoggedInStatus,
     changeLoginLoading, 
-    changeMessageContent, 
-    changeMessageVisibility,
     changeRedirectStatus, 
     changeSignupLoading, 
-    changeToken, 
+    changeToken,
+    REQUEST_LOGIN, 
+    REQUEST_LOGOUT, 
+    REQUEST_SIGNUP, 
+} from "../mutations/auth";
+
+
+import {
+    changeMessageContent, 
+    changeMessageVisibility,
+} from "../mutations/ui"
+
+import {
     requestArticlesError, 
     requestArticlesLoading, 
-    requestArticlesSuccessful, 
-    requestCollections, 
-    requestCollectionsError, 
-    requestCollectionsLoading, 
-    requestCollectionsSuccess, 
+    requestArticlesSuccessful,  
+    REQUEST_ARTICLES,
+} from "../mutations/articles";
+
+import {
     requestDictionaryError, 
     requestDictionaryLoading, 
-    requestDictionarySuccessful, 
+    requestDictionarySuccessful,
+    REQUEST_DICTIONARY, 
+} from "../mutations/dictionary";
+
+import {
     requestUserInfo, 
     requestUserInfoError, 
     requestUserInfoLoading, 
     requestUserInfoSuccess, 
-    REQUEST_ARTICLES, 
-    REQUEST_COLLECTIONS, 
-    REQUEST_COLLECTION_CREATE, 
-    REQUEST_DICTIONARY, 
-    REQUEST_LOGIN, 
-    REQUEST_LOGOUT, 
-    REQUEST_SIGNUP, 
     REQUEST_USER_INFO,
-    requestCollectionDeleteError,
-    requestCollectionDeleteLoading,
-    requestCollectionDeleteSuccess,
-    REQUEST_COLLECTION_DELETE
-} from "../mutations";
+} from "../mutations/user";
 
 
 function* fetchArticles() {

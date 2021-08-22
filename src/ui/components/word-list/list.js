@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { Loading } from "../loading";
 import { useOutsideClick } from "../../../hooks/ui";
-import { toggleWordListVisibility } from "../../../state/mutations";
+import { toggleWordListVisibility } from "../../../state/mutations/ui";
 import { useRef } from "react";
 import { breakpoints } from "../../styling/theme";
 import { EmptyList } from "./empty";

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ConnectedHero } from "../components/hero";
 import { ConnectedNewsSection } from "../components/card";
 import { connect } from "react-redux";
-import { requestArticles } from "../../state/mutations";
+import { requestArticles } from "../../state/mutations/articles";
 import { Button } from "../components/button";
 import { Layout } from "../components/layout";
 

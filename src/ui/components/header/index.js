@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { requestLogout } from "../../../state/mutations";
+import { requestLogout } from "../../../state/mutations/auth";
 import { Button, ButtonGroup } from "../button";
 import { Icon } from "../typography";
 import { Redirect } from "react-router-dom";

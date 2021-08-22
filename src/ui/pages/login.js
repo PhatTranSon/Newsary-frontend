@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { Loading } from "../components/loading";
-import { changeLoginEmail, changeLoginPassword, requestLogin } from "../../state/mutations";
+import { changeLoginEmail, changeLoginPassword, requestLogin } from "../../state/mutations/auth";
 import { Form, FormButton, FormGroup, FormInput, FormLabel, FormSubtitle, FormTitle } from "../components/form";
 import { Redirect } from "react-router-dom";
 

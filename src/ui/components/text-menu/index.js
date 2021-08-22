@@ -4,9 +4,12 @@ import styled from "styled-components";
 import { useOutsideClick } from "../../../hooks/ui";
 import { 
     changeHighlightMenuVisibility, 
-    changeWordListVisibility, 
+    changeWordListVisibility,
+} from "../../../state/mutations/ui";
+
+import {
     requestDictionary 
-} from "../../../state/mutations";
+} from "../../../state/mutations/dictionary";
 
 const MenuWrapper = styled.div`
     display: ${props => props.visible ? "block" : "none"};

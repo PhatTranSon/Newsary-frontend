@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { changeMessageVisibility } from "../../../state/mutations";
+import { changeMessageVisibility } from "../../../state/mutations/ui";
 import { connect } from "react-redux";
 import clearIcon from "../../../image/clear.svg";
 

@@ -36,3 +36,11 @@ export function deleteWordCollection(id, token) {
         }
     }).then(response => response.data);
 }
+
+export function getWordsFromCollection(id, token) {
+    return axios.get(`${USER_URL}/collection/${id}/word`, {
+        params: {
+            "secret_token": token
+        }
+    }).then(response => response.data);
+}

@@ -1,7 +1,15 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { Loading } from "../components/loading";
-import { changeSignupCity, changeSignupCountry, changeSignupEmail, changeSignupFullname, changeSignupUsername, changeSignupPassword, requestSignup } from "../../state/mutations";
+import { 
+    changeSignupCity, 
+    changeSignupCountry, 
+    changeSignupEmail, 
+    changeSignupFullname, 
+    changeSignupUsername, 
+    changeSignupPassword, 
+    requestSignup 
+} from "../../state/mutations/auth";
 import { Form, FormButton, FormGroup, FormInput, FormLabel, FormSubtitle, FormTitle } from "../components/form";
 import { Redirect } from "react-router-dom";
 

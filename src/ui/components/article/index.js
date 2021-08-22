@@ -2,7 +2,12 @@ import styled from "styled-components";
 import { TextHighlightable } from "../text-highlight";
 import { connect } from "react-redux";
 import { isValidWord, processWord } from "../../../helper/string";
-import { changeHighlightMenuCoords, changeHighlightMenuVisibility, textHighlight, textHighlightError } from "../../../state/mutations";
+import { 
+    changeHighlightMenuCoords, 
+    changeHighlightMenuVisibility, 
+    textHighlight, 
+    textHighlightError 
+} from "../../../state/mutations/ui";
 
 
 export const ArticleWrapper = styled.article`
