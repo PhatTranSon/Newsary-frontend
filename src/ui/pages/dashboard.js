@@ -10,7 +10,7 @@ import quizImage from "../../image/quiz.svg";
 import { ConnectedCollection } from "./collection";
 import { Collections } from "./collections";
 import { ConnectedCreateCollection } from "./createcollections";
-import { ConnectedQuiz } from "./quiz";
+import { ConnectedQuiz } from "./quizchoose";
 
 const GridWrapper = styled.section`
     display: grid;

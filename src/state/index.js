@@ -9,6 +9,7 @@ import { authReducer } from "./reducers/auth";
 import { messageReducer } from "./reducers/message";
 import { homeReducer } from "./reducers/home";
 import { articleReducer } from "./reducers/article";
+import { quizReducer } from "./reducers/quiz";
 
 //Create saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -18,6 +19,7 @@ const loggerMiddleware = createLogger();
 export const store = createStore(
     combineReducers({
         dashboard: dashboardReducer,
+        quiz: quizReducer,
         user: userReducer,
         authentication: authReducer,
         message: messageReducer,

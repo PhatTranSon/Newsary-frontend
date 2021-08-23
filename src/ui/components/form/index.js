@@ -78,6 +78,17 @@ export const FormInput = styled.input`
     }
 `;
 
+export const FormSelect = styled.select`
+    display: block;
+    width: 100%;
+    font-family: 'Poppins', sans-seriff;
+    font-size: 1rem;
+    padding: 0.75rem;
+    border: 2px solid ${props => props.theme.gray};
+    border-radius: 0.5rem;
+    margin-bottom: .75rem;
+`;
+
 export const FormButton = styled(Button)`
     width: 100%;
     font-size: 1rem;

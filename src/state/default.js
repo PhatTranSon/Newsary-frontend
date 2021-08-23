@@ -34,6 +34,13 @@ export const defaultState = {
             error: false
         }
     },
+    quiz: {
+        hasStarted: false,
+        hasEnded: false,
+        numberOfQuestions: 0,
+        currentQuestion: 0,
+        questions: []
+    },
     user: {
         username: "",
         fullname: "",
