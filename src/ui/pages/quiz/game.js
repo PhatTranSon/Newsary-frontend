@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { setHasStarted, setNextQuestion, setQuizEnded, setRemainingSeconds, setScoreIncrease } from "../../../state/mutations/quiz";
+import { setHasStarted, setNextQuestion, setQuizEnded, setScoreIncrease } from "../../../state/mutations/quiz";
 import { ClickableButton } from "../../components/button/clickable";
 import { theme } from "../../styling/theme";
 import { Button } from "../../components/button";
@@ -8,7 +8,11 @@ import { Button } from "../../components/button";
 const Wrapper = styled.div`
     width: 100%;
     height: 90vh;
-    background-color: ${props => props.theme.primaryColorLight};
+    background: linear-gradient(
+        to right bottom, 
+        ${props => props.theme.primaryColorLight},
+        ${props => props.theme.primaryColorDark}
+    );
     border-radius: 0.5rem;
     padding: 2rem;
     color: ${props => props.theme.white};
@@ -65,7 +69,8 @@ const QuizGame = ({
     increaseScore,
     skipQuestion,
     score,
-    restart
+    restart,
+    end
 }) => {
     const question = questions[currentQuestion];
 
@@ -74,20 +79,32 @@ const QuizGame = ({
             skipQuestion();
         }, 500);
     }
+
+    function areQuestionsLeft() {
+        return currentQuestion < numberOfQuestions - 1;
+    }
+
+    function callQuestionSkipIfRemanining() {
+        if (areQuestionsLeft()) {
+            callQuestionSkip();
+        } else {
+            end();
+        }
+    }
     
     function onCorrect() {
         //Increase score
         increaseScore();
         //Move to next question
         if (seconds > 0) {
-            callQuestionSkip();
+            callQuestionSkipIfRemanining();
         }
     }
 
     function onWrong() {
         //Move to next questio,
         if (seconds > 0) {
-            callQuestionSkip();
+            callQuestionSkipIfRemanining();
         }
     }
 
@@ -97,10 +114,10 @@ const QuizGame = ({
                 hasEnded ?
                 <EndGame>
                     <h1>
-                    Score 
+                        Score 
                     </h1>
                     <h1>
-                    { score } / { numberOfQuestions }
+                        { score } / { numberOfQuestions }
                     </h1>
                     <Button inverted onClick={() => restart()}>Restart</Button>
                 </EndGame> :
@@ -154,8 +171,10 @@ function mapDispatchToProps(dispatch, ownProps) {
             dispatch(setScoreIncrease());
         },
         skipQuestion: function() {
-            dispatch(setRemainingSeconds(60));
             dispatch(setNextQuestion());
+        },
+        end: function() {
+            dispatch(setQuizEnded(true));
         },
         restart: function() {
             dispatch(setQuizEnded(true));

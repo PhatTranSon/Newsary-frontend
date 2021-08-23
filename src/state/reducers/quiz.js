@@ -1,105 +1,18 @@
 import { defaultState } from "../default";
-import { SET_QUIZ_START, SET_QUIZ_END, SET_REMAINING_SECONDS, SET_NEXT_QUESTION, SET_INTERVAL_ID, SET_SCORE_INCREASE, SET_HAS_STARTED } from "../mutations/quiz";
+import { 
+    SET_QUIZ_END, 
+    SET_REMAINING_SECONDS, 
+    SET_NEXT_QUESTION, 
+    SET_INTERVAL_ID, 
+    SET_SCORE_INCREASE, 
+    SET_HAS_STARTED,
+    INITIALIZE_QUIZ,
+    QUESTION_TIME
+} from "../mutations/quiz";
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
-
-function shuffle(array) {
-    var currentIndex = array.length,  randomIndex;
-  
-    // While there remain elements to shuffle...
-    while (currentIndex !== 0) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-  
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
-    }
-  
-    return array;
-}
-
-function chooseRandomWord(allWords) {
-    return allWords[getRandomInt(allWords.length)];
-}
-
-function scrambleAnswers(answers) {
-    return shuffle(answers);
-}
-
-function getRandomPrompt(word) {
-    const number = getRandomInt(2);
-    if (number === 0) {
-        return `Which word has the phonetic "${ word.phonetic }" ?`;
-    } else {
-        return `Which word has the meaning "${ word.meaning }" ?`;
-    }
-}
-
-function generateQuestion(allWords, chosenWord) {
-    const question = getRandomPrompt(chosenWord);
-
-    //Create a word array containing answer
-    let answers = [chosenWord.word];
-    for (let i = 0; i !== 3; ++i) {
-        //Choose another randome word which is not chosen word
-        let randomWord = chooseRandomWord(allWords);
-        while (randomWord.word === chosenWord.word) {
-            randomWord = chooseRandomWord(allWords);
-        }
-
-        //Append to anwers
-        answers = scrambleAnswers(answers);
-        answers.push(randomWord.word);
-    }
-
-    //Scramble answer and get index of word
-    const correctAnswerIndex = answers.findIndex(w => w === chosenWord.word);
-
-    return {
-        question,
-        answers,
-        correctAnswerIndex
-    };
-}
-
-function createQuiz(words, numberOfQuestions) {
-    //Create an object containing the questions and their answers
-    /*
-        [
-            {
-                question: `Which word has the phonetics "pop" ?`,
-                answers: ["Long", "Popa", "Man", "Bat"],
-                correctAnswerIndex: 1
-            },
-            {
-                ...
-            },
-            {
-                ...
-            }
-        ]
-    */
-    const questions = [];
-    const chosenWords = new Set();
-
-    //Choose random words
-    for (let i = 0; i !== numberOfQuestions; ++i) {
-        let currentWord = chooseRandomWord(words);
-        while (chosenWords.has(currentWord.word) || 
-            (currentWord.phonetic === "unknown" || currentWord.meaning === "unknown")) {
-            currentWord = chooseRandomWord(words);
-        }
-
-        questions.push(generateQuestion(words, currentWord));
-    }
-
-    return questions
-}
+import {
+    createQuiz
+} from "../../helper/quiz";
 
 export function quizReducer(quiz = defaultState.quiz, action) {
     let newState;
@@ -124,17 +37,11 @@ export function quizReducer(quiz = defaultState.quiz, action) {
             };
             break;
         case SET_NEXT_QUESTION:
-            if (quiz.currentQuestion + 1 >= quiz.numberOfQuestions) {
-                newState = {
-                    ...quiz,
-                    hasEnded: true
-                };
-            } else {
-                newState = {
-                    ...quiz,
-                    currentQuestion: quiz.currentQuestion + 1
-                };
-            }
+            newState = {
+                ...quiz,
+                seconds: QUESTION_TIME,
+                currentQuestion: quiz.currentQuestion + 1
+            };
             break;
         case SET_REMAINING_SECONDS:
             newState = {
@@ -142,7 +49,7 @@ export function quizReducer(quiz = defaultState.quiz, action) {
                 seconds: action.seconds
             };
             break;
-        case SET_QUIZ_START:
+        case INITIALIZE_QUIZ:
             newState = {
                 ...quiz,
                 hasStarted: true,
@@ -156,6 +63,7 @@ export function quizReducer(quiz = defaultState.quiz, action) {
         case SET_QUIZ_END:
             newState = {
                 ...quiz,
+                seconds: QUESTION_TIME,
                 hasEnded: true
             };
             break;

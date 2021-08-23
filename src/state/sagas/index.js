@@ -48,6 +48,7 @@ import {
 
 
 import {
+    APP_STARTED,
     changeMessageContent, 
     changeMessageVisibility,
 } from "../mutations/ui"
@@ -73,7 +74,12 @@ import {
     requestUserInfoSuccess, 
     REQUEST_USER_INFO,
 } from "../mutations/user";
-import { RUN_QUIZ, setNextQuestion, setQuizEnded, setRemainingSeconds } from "../mutations/quiz";
+import { 
+    START_QUIZ, 
+    setNextQuestion, 
+    setQuizEnded, 
+    setRemainingSeconds 
+} from "../mutations/quiz";
 
 
 function* fetchArticles() {
@@ -341,7 +347,7 @@ function* startQuiz() {
         const state = yield select();
         const { seconds, currentQuestion, numberOfQuestions, hasEnded } = state.quiz;
 
-        //Check if game ended
+        //Check if game ended early
         if (hasEnded) {
             break;
         }
@@ -352,9 +358,9 @@ function* startQuiz() {
             if (currentQuestion === numberOfQuestions - 1) {
                 yield put(setQuizEnded(true));
                 return;
+            } else {
+                yield put(setNextQuestion());
             }
-            yield put(setRemainingSeconds(60));
-            yield put(setNextQuestion());
         } else {
             yield put(setRemainingSeconds(seconds - 1));
         }
@@ -374,6 +380,7 @@ function* showMessage(message) {
 }
 
 export function* sagas() {
+    yield takeEvery(APP_STARTED, fetchArticles);
     yield takeEvery(REQUEST_ARTICLES, fetchArticles);
     yield takeEvery(REQUEST_DICTIONARY, fetchWord);
     yield takeEvery(REQUEST_SIGNUP, fetchSignup);
@@ -386,5 +393,5 @@ export function* sagas() {
     yield takeEvery(REQUEST_COLLECTION_ADD_WORD, fetchCollectionAdd);
     yield takeEvery(REQUEST_COLLECTION_UPDATE, fetchCollectionUpdate);
     yield takeEvery(REQUEST_COLLECTION_REMOVE_WORD, fetchCollectionRemoveWord);
-    yield takeEvery(RUN_QUIZ, startQuizConcurrently);
+    yield takeEvery(START_QUIZ, startQuizConcurrently);
 }

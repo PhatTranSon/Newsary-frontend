@@ -3,7 +3,7 @@ import { FormLabel, FormInput, FormGroup, FormSelect } from "../../components/fo
 import { CardWrapper } from "../../components/cardwrapper";
 import { Button } from "../../components/button";
 import { connect } from "react-redux";
-import { runQuiz, setQuizStart } from "../../../state/mutations/quiz";
+import { startQuiz, initializeQuiz } from "../../../state/mutations/quiz";
 import { useState } from "react";
 
 const Title = styled.h1`
@@ -104,8 +104,8 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         startQuiz: function(collection, numberOfQuestions) {
-            dispatch(setQuizStart(collection, numberOfQuestions));
-            dispatch(runQuiz());
+            dispatch(initializeQuiz(collection, numberOfQuestions));
+            dispatch(startQuiz());
         }
     }
 }

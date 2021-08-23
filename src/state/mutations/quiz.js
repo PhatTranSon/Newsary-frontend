@@ -1,11 +1,12 @@
-export const SET_QUIZ_START = "SET_QUIZ_START";
+export const INITIALIZE_QUIZ = "INITIALIZE_QUIZ";
 export const SET_QUIZ_END = "SET_QUIZ_END";
 export const SET_REMAINING_SECONDS = "SET_REMAINING_SECONDS";
 export const SET_NEXT_QUESTION = "SET_NEXT_QUESTION";
 export const SET_INTERVAL_ID = "SET_INTERVAL_ID";
-export const RUN_QUIZ = "RUN_QUIZ";
+export const START_QUIZ = "START_QUIZ";
 export const SET_SCORE_INCREASE = "SET_SCORE_INCREASE";
 export const SET_HAS_STARTED = "SET_HAS_STARTED";
+export const QUESTION_TIME = 60;
 
 export function setScoreIncrease() {
     return {
@@ -13,9 +14,9 @@ export function setScoreIncrease() {
     };
 }
 
-export function runQuiz() {
+export function startQuiz() {
     return {
-        type: RUN_QUIZ
+        type: START_QUIZ
     };
 }
 
@@ -46,9 +47,9 @@ export function setHasStarted(hasStarted) {
     };
 }
 
-export function setQuizStart(collection, numberOfQuestions) {
+export function initializeQuiz(collection, numberOfQuestions) {
     return {
-        type: SET_QUIZ_START,
+        type: INITIALIZE_QUIZ,
         collection,
         numberOfQuestions
     };

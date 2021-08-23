@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { trimParagraph } from "../../../helper/string";
 import { Loading } from "../loading";
 import { connect } from "react-redux";
+import { Button } from "../button";
+import { requestArticles } from "../../../state/mutations/articles";
 
 
 const Article = styled.article`
@@ -72,15 +74,18 @@ const NewsCard = ({ article }) => {
     )
 }
 
-const NewsSection = ({ articles, loading }) => {
+const NewsSection = ({ articles, loading, requestMoreArticles }) => {
     return (
         loading ?
         <Loading /> :
-        <NewsWrapper>
-        {
-            articles.map((article, index) => <NewsCard key={index} article={article}/>)
-        }
-        </NewsWrapper>
+        <>
+            <NewsWrapper>
+            {
+                articles.map((article, index) => <NewsCard key={index} article={article}/>)
+            }
+            </NewsWrapper>
+            <Button w="100%" onClick={requestMoreArticles}>Load more</Button>
+        </>
     );
 };
 
@@ -91,4 +96,12 @@ function mapStateToProps(state) {
     };
 }
 
-export const ConnectedNewsSection = connect(mapStateToProps)(NewsSection);
+function mapDispatchToProps(dispatch) {
+    return {
+        requestMoreArticles: function() {
+            dispatch(requestArticles());
+        }
+    }
+};
+
+export const ConnectedNewsSection = connect(mapStateToProps, mapDispatchToProps)(NewsSection);
