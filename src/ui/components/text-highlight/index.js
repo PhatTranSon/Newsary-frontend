@@ -43,7 +43,7 @@ export const TextHighlightable = ({ content, onHighlight }) => {
         window.addEventListener("mouseup", onMouseUp);
         //Remove highlight event
         return () => window.removeEventListener("mouseup", onMouseUp);
-    }, [])
+    })
 
     return (
         <Paragraph>{ content }</Paragraph>

@@ -39,7 +39,9 @@ export const defaultState = {
         hasEnded: false,
         numberOfQuestions: 0,
         currentQuestion: 0,
-        questions: []
+        seconds: 60,
+        questions: [],
+        score: 0
     },
     user: {
         username: "",

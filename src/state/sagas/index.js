@@ -26,7 +26,6 @@ import {
     REQUEST_COLLECTION_CREATE, 
     REQUEST_COLLECTION_DELETE,
     requestCollectionContentLoading,
-    requestCollectionContentError,
     requestCollectionContentSuccess,
     requestCollectionAddWordSuccess,
     REQUEST_COLLECTION_ADD_WORD,
@@ -74,6 +73,7 @@ import {
     requestUserInfoSuccess, 
     REQUEST_USER_INFO,
 } from "../mutations/user";
+import { RUN_QUIZ, setNextQuestion, setQuizEnded, setRemainingSeconds } from "../mutations/quiz";
 
 
 function* fetchArticles() {
@@ -125,7 +125,7 @@ function* fetchSignup({ user }) {
 
     //Make sign up request
     try {
-        const _ = yield call(signup, user);
+        yield call(signup, user);
         yield put(changeRedirectStatus(true));
         yield showMessage("Registration complete. Please login using created account");
     } catch (error) {
@@ -270,7 +270,7 @@ function* fetchCollectionDelete({ collection }) {
     yield showMessage("Deleting");
 
     try {
-        const _ = yield call(deleteWordCollection, _id, token);
+        yield call(deleteWordCollection, _id, token);
         yield showMessage("Collection deleted");
         yield put(requestCollectionDeleteSuccess(collection));
     } catch(error) {
@@ -308,7 +308,7 @@ function* fetchCollectionUpdate({ id, name }) {
     yield showMessage("Updating word collection");
 
     try {
-        const _ = yield call(updateCollection, id, name, token);
+        yield call(updateCollection, id, name, token);
         yield put(requestCollectionUpdateSuccess(id, name));
         yield showMessage("Collection updated");
     } catch(error) {
@@ -325,12 +325,47 @@ function* fetchCollectionRemoveWord({ collectionId, wordId }) {
     yield showMessage("Deleting word");
 
     try {
-        const _ = yield call(deleteWordFromCollection, collectionId, wordId, token);
+        yield call(deleteWordFromCollection, collectionId, wordId, token);
         yield put(requestCollectionRemoveWordSuccess(collectionId, wordId));
         yield showMessage("Word deleted");
     } catch(error) {
         yield showMessage("Error encountered. Try again");
     }
+}
+
+function* startQuiz() {
+    let breakOut = false;
+
+    while (!breakOut) {
+        //Get the remaining seconds
+        const state = yield select();
+        const { seconds, currentQuestion, numberOfQuestions, hasEnded } = state.quiz;
+
+        //Check if game ended
+        if (hasEnded) {
+            break;
+        }
+
+        //Set seconds
+        if (seconds === 0) {
+            //Game ended as the last timer is over
+            if (currentQuestion === numberOfQuestions - 1) {
+                yield put(setQuizEnded(true));
+                return;
+            }
+            yield put(setRemainingSeconds(60));
+            yield put(setNextQuestion());
+        } else {
+            yield put(setRemainingSeconds(seconds - 1));
+        }
+
+        //Delay for one second
+        yield delay(1000);
+    } 
+}
+
+function* startQuizConcurrently() {
+    yield fork(startQuiz);
 }
 
 function* showMessage(message) {
@@ -351,4 +386,5 @@ export function* sagas() {
     yield takeEvery(REQUEST_COLLECTION_ADD_WORD, fetchCollectionAdd);
     yield takeEvery(REQUEST_COLLECTION_UPDATE, fetchCollectionUpdate);
     yield takeEvery(REQUEST_COLLECTION_REMOVE_WORD, fetchCollectionRemoveWord);
+    yield takeEvery(RUN_QUIZ, startQuizConcurrently);
 }

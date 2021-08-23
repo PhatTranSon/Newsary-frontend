@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { requestCollectionAdd, requestCollectionAddWordSuccess } from "../../../state/mutations/collections";
+import { requestCollectionAdd } from "../../../state/mutations/collections";
 import { Button } from "../button";
 
 const CardWrapper = styled.li`

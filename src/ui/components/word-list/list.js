@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Loading } from "../loading";
 import { useOutsideClick } from "../../../hooks/ui";
 import { toggleWordListVisibility } from "../../../state/mutations/ui";
-import { requestCollectionAdd } from "../../../state/mutations/collections";
 import { useRef } from "react";
 import { breakpoints } from "../../styling/theme";
 import { EmptyList } from "./empty";
@@ -58,7 +57,7 @@ const List = ({ loading, visible, words, hideList }) => {
     )
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
     return {
         loading: state.articlePage.wordList.loading,
         visible: state.articlePage.wordList.visible,
@@ -66,7 +65,7 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
     return {
         hideList: function() {
             dispatch(toggleWordListVisibility());

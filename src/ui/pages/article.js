@@ -4,7 +4,7 @@ import { ConnectedTextMenu } from "../components/text-menu";
 import { WordList } from "../components/word-list";
 
 
-export const Article = ({  }) => {
+export const Article = () => {
     //Get the id from params
     const { id } = useParams();
 

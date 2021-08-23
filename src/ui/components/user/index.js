@@ -34,7 +34,7 @@ const WelcomeUser = ({
 
 function mapStateToProps(state, ownProps) {
     //Get user
-    const { user, dashboard } = state;
+    const { user } = state;
 
     return {
         userLoading: user.loading,

@@ -5,12 +5,14 @@ export const theme = {
     grayColorDark: "#646369",
     grayColorLight: "#edf2f4",
     grayColorLighter: "#adb5bd",
+    grayColorShadow: "#ced4da",
     secondaryColor: "#3a86ff",
     secondaryColorLight: "#a8dadc",
     black: "#000",
     gray: "#eee",
     white: "#fff",
-    dangerColor: "#e63946"
+    dangerColor: "#e63946",
+    successColor: "#2a9d8f"
 };
 
 const sizes = {

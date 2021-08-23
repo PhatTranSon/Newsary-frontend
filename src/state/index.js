@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { sagas } from "./sagas";
 
@@ -13,8 +12,6 @@ import { quizReducer } from "./reducers/quiz";
 
 //Create saga middleware
 const sagaMiddleware = createSagaMiddleware();
-const loggerMiddleware = createLogger();
-
 //Create redux store
 export const store = createStore(
     combineReducers({
@@ -27,7 +24,7 @@ export const store = createStore(
         articlePage: articleReducer,
     }),
     applyMiddleware(
-        loggerMiddleware,
+        //loggerMiddleware,
         sagaMiddleware
     )
 );

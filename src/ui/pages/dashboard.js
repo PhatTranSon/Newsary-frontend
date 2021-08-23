@@ -10,7 +10,7 @@ import quizImage from "../../image/quiz.svg";
 import { ConnectedCollection } from "./collection";
 import { Collections } from "./collections";
 import { ConnectedCreateCollection } from "./createcollections";
-import { ConnectedQuiz } from "./quizchoose";
+import { ConnectedQuiz } from "./quiz";
 
 const GridWrapper = styled.section`
     display: grid;
@@ -92,7 +92,7 @@ const DashBoard = () => {
                     </Route>
 
                     <Route path={`${url}/quiz`}>
-                        <ConnectedQuiz/>
+                        <ConnectedQuiz />
                     </Route>
 
                     <Route path={`${url}/createcollection`}>

@@ -1,5 +1,5 @@
 import { defaultState } from "../default";
-import { SET_QUIZ_START, SET_QUIZ_END } from "../mutations/quiz";
+import { SET_QUIZ_START, SET_QUIZ_END, SET_REMAINING_SECONDS, SET_NEXT_QUESTION, SET_INTERVAL_ID, SET_SCORE_INCREASE, SET_HAS_STARTED } from "../mutations/quiz";
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -9,7 +9,7 @@ function shuffle(array) {
     var currentIndex = array.length,  randomIndex;
   
     // While there remain elements to shuffle...
-    while (currentIndex != 0) {
+    while (currentIndex !== 0) {
   
       // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
@@ -45,7 +45,7 @@ function generateQuestion(allWords, chosenWord) {
 
     //Create a word array containing answer
     let answers = [chosenWord.word];
-    for (let i = 0; i != 3; ++i) {
+    for (let i = 0; i !== 3; ++i) {
         //Choose another randome word which is not chosen word
         let randomWord = chooseRandomWord(allWords);
         while (randomWord.word === chosenWord.word) {
@@ -88,7 +88,7 @@ function createQuiz(words, numberOfQuestions) {
     const chosenWords = new Set();
 
     //Choose random words
-    for (let i = 0; i != numberOfQuestions; ++i) {
+    for (let i = 0; i !== numberOfQuestions; ++i) {
         let currentWord = chooseRandomWord(words);
         while (chosenWords.has(currentWord.word) || 
             (currentWord.phonetic === "unknown" || currentWord.meaning === "unknown")) {
@@ -105,14 +105,53 @@ export function quizReducer(quiz = defaultState.quiz, action) {
     let newState;
 
     switch(action.type) {
+        case SET_HAS_STARTED:
+            newState = {
+                ...quiz,
+                hasStarted: action.hasStarted
+            };
+            break;
+        case SET_SCORE_INCREASE:
+            newState = {
+                ...quiz,
+                score: quiz.score + 1
+            };
+            break;
+        case SET_INTERVAL_ID:
+            newState = {
+                ...quiz,
+                intervalId: action.intervalId
+            };
+            break;
+        case SET_NEXT_QUESTION:
+            if (quiz.currentQuestion + 1 >= quiz.numberOfQuestions) {
+                newState = {
+                    ...quiz,
+                    hasEnded: true
+                };
+            } else {
+                newState = {
+                    ...quiz,
+                    currentQuestion: quiz.currentQuestion + 1
+                };
+            }
+            break;
+        case SET_REMAINING_SECONDS:
+            newState = {
+                ...quiz,
+                seconds: action.seconds
+            };
+            break;
         case SET_QUIZ_START:
             newState = {
+                ...quiz,
                 hasStarted: true,
                 hasEnded: false,
                 numberOfQuestions: action.numberOfQuestions,
                 currentQuestion: 0,
-                questions: createQuiz(action.collection.words, action.numberOfQuestions)
-            }
+                questions: createQuiz(action.collection.words, action.numberOfQuestions),
+                score: 0
+            };
             break;
         case SET_QUIZ_END:
             newState = {

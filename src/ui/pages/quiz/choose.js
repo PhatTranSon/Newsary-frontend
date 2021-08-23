@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { FormLabel, FormInput, FormGroup, FormSelect } from "../components/form";
-import { CardWrapper } from "../components/cardwrapper";
-import { Button } from "../components/button";
+import { FormLabel, FormInput, FormGroup, FormSelect } from "../../components/form";
+import { CardWrapper } from "../../components/cardwrapper";
+import { Button } from "../../components/button";
 import { connect } from "react-redux";
-import { setQuizStart } from "../../state/mutations/quiz";
+import { runQuiz, setQuizStart } from "../../../state/mutations/quiz";
 import { useState } from "react";
 
 const Title = styled.h1`
@@ -32,9 +32,8 @@ const Buttons = styled.div`
     }
 `;
 
-const Quiz = ({ 
+const QuizChoose = ({ 
     collections,
-    hasQuizStarted,
     startQuiz
 }) => {
     const [collectionId, setCollectionId] = useState("");
@@ -55,6 +54,8 @@ const Quiz = ({
         if (collectionId && totalQuestionsAsNumber > 0) {
             const collection = collections.find(collection => collection._id === collectionId);
             startQuiz(collection, totalQuestionsAsNumber);
+        } else {
+            alert("Invalid option. Try again");
         }
     }
 
@@ -95,7 +96,7 @@ const Quiz = ({
 
 function mapStateToProps(state, ownProps) {
     return {
-        collections: state.dashboard.wordCollections.content,
+        collections: state.dashboard.wordCollections.content.filter(collection => collection.words.length >= 4),
         hasQuizStarted: state.quiz.hasStarted,
     };
 }
@@ -104,8 +105,9 @@ function mapDispatchToProps(dispatch, ownProps) {
     return {
         startQuiz: function(collection, numberOfQuestions) {
             dispatch(setQuizStart(collection, numberOfQuestions));
+            dispatch(runQuiz());
         }
     }
 }
 
-export const ConnectedQuiz = connect(mapStateToProps, mapDispatchToProps)(Quiz);
+export const ConnectedQuizChoose = connect(mapStateToProps, mapDispatchToProps)(QuizChoose);
