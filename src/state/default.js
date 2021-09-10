@@ -59,6 +59,7 @@ export const defaultState = {
     homePage: {
         loading: true,
         allArticles: [],
+        isBannerVisible: true,
         currentId: 0
     },
     articlePage: {

@@ -14,8 +14,18 @@ export const CHANGE_WORDLIST_VISIBLE = "CHANGE_WORDLIST_VISIBLE";
 export const CHANGE_MESSAGE_VISIBILITY = "CHANGE_MESSAGE_VISIBILITY";
 export const CHANGE_MESSAGE_CONTENT = "CHANGE_MESSAGE_CONTENT";
 
+/* Close banner mutation */
+export const CHANGE_BANNER_VISIBILITY = "CHANGE_BANNER_VISIBILITY";
+
 /* App started */
 export const APP_STARTED = "APP_STARTED";
+
+export function changeBannerVisibility(visible) {
+    return {
+        type: CHANGE_BANNER_VISIBILITY,
+        visible
+    }
+}
 
 export function setAppStarted() {
     return {

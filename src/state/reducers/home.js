@@ -5,10 +5,17 @@ import {
     REQUEST_ARTICLES_LOADING, 
     REQUEST_ARTICLES_SUCCESSFUL
 } from "../mutations/articles";
+import { CHANGE_BANNER_VISIBILITY } from "../mutations/ui";
 
 export function homeReducer(homePage = defaultState.homePage, action) {
     let newState;
     switch(action.type) {
+        case CHANGE_BANNER_VISIBILITY:
+            newState = {
+                ...homePage,
+                isBannerVisible: action.visible
+            }
+            break;
         case REQUEST_ARTICLES_SUCCESSFUL:
             newState = {
                 ...homePage,
