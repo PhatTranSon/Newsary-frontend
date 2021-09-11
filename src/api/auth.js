@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const AUTH_URL = "https://guarded-journey-20674.herokuapp.com/";
+const AUTH_URL = "https://guarded-journey-20674.herokuapp.com";
 
 export function signup(user) {
     return axios.post(`${AUTH_URL}/signup`, user)
