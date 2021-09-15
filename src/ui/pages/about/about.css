@@ -1,0 +1,61 @@
+#AboutUs .team .team-img {
+    width: 190px;
+    border-radius: 50%;
+    margin-bottom: 1.5rem!important;
+}
+
+
+    
+
+
+
+#AboutUs img, png {
+    vertical-align: middle;
+}
+
+#AboutUs .bg-img {
+    background-image: url("../../../image/about/learnEng.png");
+}
+
+#AboutUs .bg-img.overlay {
+    position: relative;
+}
+#AboutUs .bg-img.overlay::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(8, 17, 88, 0.8);
+    z-index: 1s;
+}
+
+#AboutUs .bg-img, .bg-img>.container>.row {
+    height: 50vh;
+    min-height: 650px;
+}
+
+#AboutUs .top-title{
+    position: relative;
+    z-index: 2;
+}
+
+#AboutUs .section {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+}
+
+#AboutUs .img-responsive {
+    height: 200px;
+}
+
+#AboutUs .text {
+    padding-left: 100px;
+}
+
+@media only screen and (max-width: 768px) {
+    #AboutUs .text {
+        padding-left: 45px;
+    }
+}

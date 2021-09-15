@@ -19,6 +19,9 @@ import { ConnectedDashboard } from "./pages/dashboard";
 import {
     setAppStarted
 } from "../state/mutations/ui";
+import About from "./pages/about/about";
+import TermOfService from "./pages/termofservice";
+import PrivacyPolicy from "./pages/privacypolicy";
 
 export const App = ({ startApp }) => {
     useEffect(() => {
@@ -45,6 +48,15 @@ export const App = ({ startApp }) => {
                     <ConnectedPrivateRoute path="/dashboard">
                         <ConnectedDashboard />
                     </ConnectedPrivateRoute>
+                    <Route path="/about">
+                        <About />
+                    </Route>
+                    <Route path="/privacy_policy">
+                        <PrivacyPolicy />
+                    </Route>
+                    <Route path="/term_of_service">
+                        <TermOfService />
+                    </Route>
                 </Switch>
                 <Footer/>
             </ThemeProvider>
