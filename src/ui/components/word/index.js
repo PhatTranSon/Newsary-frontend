@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import deleteIcon from "../../../image/delete.svg";
 import { requestCollectionRemoveWord } from "../../../state/mutations/collections";
+import SpeakIcon from "../../../image/speak.svg";
+import { speak } from "../../../speech";
 import { connect } from "react-redux";
 
 export const WordCards = styled.div`
@@ -39,10 +41,34 @@ const WordCardButton = styled.button`
     cursor: pointer;
 `;
 
+const Word = styled.div`
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    & button {
+        margin-left: .5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        & img {
+            width: 2rem;
+            height: 2rem;
+            transform: translateY(-.4rem);
+        }
+    }
+`;
+
 const WordCard = ({ collectionId, word, remove }) => {
     return (
         <WordCardWrapper>
-            <h3>{ word.word }</h3>
+            <Word>
+                <h3>{ word.word }</h3>
+                <button onClick={() => speak(word.word)}>
+                    <img src={SpeakIcon} alt="Speak"/>
+                </button>
+            </Word>
             <h4>Phonetic</h4>
             <p>{ word.phonetic }</p>
             <h4>Meaning</h4>

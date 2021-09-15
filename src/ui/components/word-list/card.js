@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { requestCollectionAdd } from "../../../state/mutations/collections";
 import { Button } from "../button";
+import SpeakIcon from "../../../image/speak.svg";
+import { speak } from "../../../speech";
 
 const CardWrapper = styled.li`
     border-bottom: 2px dashed ${props => props.theme.gray};
@@ -39,6 +41,25 @@ const CardWrapper = styled.li`
     }
 `;
 
+const Word = styled.div`
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    & button {
+        margin-left: .5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        & img {
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+`;
+
+
 const Card = ({ word, loggedIn, collections, add }) => {
     const [collectionId, setCollectionId] = useState("");
 
@@ -52,11 +73,16 @@ const Card = ({ word, loggedIn, collections, add }) => {
             //Call append word
             add(collectionId, word);
         }
-    }
+    } 
 
     return (
         <CardWrapper>
-            <h3>{ word.word }</h3>
+            <Word>
+                <h3>{ word.word }</h3>
+                <button onClick={() => speak(word.word)}>
+                    <img src={SpeakIcon} alt="Speak"/>
+                </button>
+            </Word>
             <h4>Phonetic</h4>
             <p>{ word.phonetic }</p>
             <h4>Meaning</h4>
