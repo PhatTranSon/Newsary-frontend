@@ -62,7 +62,7 @@ const QuizChoose = ({
     return (
         <CardWrapper>
             <Title>Take a quiz</Title>
-            <Subtitle>Choose the collection you want to test, and the number of questions</Subtitle>
+            <Subtitle>Choose the collection (only one with 4 or more words are included) you want to test, and the number of questions</Subtitle>
             <Form onSubmit={onFormSubmit}>
                 <FormGroup>
                     <FormInput type="number" name="questions" id="questions"
