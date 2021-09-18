@@ -3,14 +3,20 @@ import { breakpoints } from "../../styling/theme";
 import { Icon } from "../typography";
 import { Link } from "react-router-dom";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faEnvelope, faHome, faPhone } from '@fortawesome/free-solid-svg-icons';
+library.add(faHome, faEnvelope, faPhone)
 
-const Wrapper = styled.footer`
+const FooterWrapper = styled.footer`
+    padding: 2rem;
+    border-top: 2px solid #eee;
+`;
+
+const Wrapper = styled.div`
     display: flex;
     flex-flow: row nowrap;
-    align-items: start;
-    padding: 2rem; 
-    border-top: 2px solid #eee;
-
+    align-items: center;
     ${breakpoints.sm} {
         flex-flow: column nowrap;
     }
@@ -65,47 +71,73 @@ const LinkSection = styled.div`
     }
 `;
 
+const CopyrightSection = styled.div`
+    margin-top: 2rem;
+    text-align: center;
+    & strong {
+        color: #e76f51;
+        font-size: 1.2rem;
+    }
+`;
 export const Footer = () => {
     return (
-        <Wrapper>
-            <IconSection>
-                <Icon big>Newsary</Icon>
-            </IconSection>
+        <FooterWrapper>
+            <Wrapper>
+                <IconSection>
+                    <Icon big>Newsary</Icon>
+                </IconSection>
 
-            <LinkSection>
-                <div>
-                    <h3>Website</h3>
-                    <nav>
-                        <ul>
-                            <li>
-                                <Link to="/">
-                                    Read all news
-                                </Link>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </LinkSection>
-
-            <LinkSection>
-                <div>
-                    <h3>Account</h3>
-                    <nav>
-                        <ul>
-                            <li>
-                                <Link to="/login">
-                                    Login
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/signup">
-                                    Sign up
-                                </Link>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </LinkSection>
-        </Wrapper>
+                <LinkSection>
+                    <div>
+                        <h3>Website</h3>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <Link to="/">
+                                        Home
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/about">
+                                        About
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/privacy_policy">
+                                        Privacy Policy
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/term_of_service">
+                                        Term of Service
+                                    </Link>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </LinkSection>
+                <LinkSection>
+                    <div>
+                        <h3>Contact</h3>
+                        <nav>
+                            <p>
+                                <FontAwesomeIcon icon={faHome} style={{marginRight: "8px"}} /> Address : District 7, HCM City, Vietnam
+                            </p>
+                            <p>
+                                <FontAwesomeIcon icon={faEnvelope} style={{marginRight: "8px"}} /> Email: newsaryforeveryone@gmail.com
+                            </p>
+                            <p>
+                                <FontAwesomeIcon icon={faPhone} style={{marginRight: "8px"}} /> Phone Num: +84 012345678
+                            </p>       
+                        </nav>
+                    </div>
+                </LinkSection>
+                
+            </Wrapper>
+            <CopyrightSection>
+                &#169; Copyright 2021 All Rights Reserved By: <strong> Newsary</strong>
+            </CopyrightSection>
+        </FooterWrapper>
+        
     )
 }
