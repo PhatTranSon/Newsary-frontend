@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import createSagaMiddleware from "redux-saga";
+import logger from "redux-logger";
 import { sagas } from "./sagas";
 
 import { dashboardReducer } from "./reducers/dashboard";
@@ -25,6 +26,7 @@ export const store = createStore(
     }),
     applyMiddleware(
         //loggerMiddleware,
+        logger,
         sagaMiddleware
     )
 );

@@ -178,7 +178,7 @@ export function dashboardReducer(dashboard = defaultState.dashboard, action) {
                 ...dashboard,
                 wordCollections: {
                     ...dashboard.wordCollections,
-                    content: [...dashboard.wordCollections.content, action.collection]
+                    content: [...dashboard.wordCollections.content, { ...action.collection, words: [] }]
                 },
                 createCollection: {
                     ...dashboard.createCollection,
